@@ -47,7 +47,11 @@ class VIMUtils(object):
         pass
 
     def get_offset(self):
-        pass
+        lineno, colno = vim.current.window.cursor
+        result = colno
+        for line in vim.current.buffer[:lineno-1]:
+            result += len(line) + 1
+        return result
 
     def get_text(self):
         return '\n'.join(vim.current.buffer) + '\n'
