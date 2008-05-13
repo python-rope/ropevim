@@ -121,17 +121,25 @@ class VIMUtils(object):
         self._add_command(name, callback, key, prefix, prekey='<F12>p')
 
     def add_hook(self, name, callback, hook):
-        pass
+        mapping = {'before_save': 'FileWritePre,BufWritePre',
+                   'after_save': 'FileWritePost,BufWritePost',
+                   'exit': 'VimLeave'}
+        self._add_function(name, callback)
+        vim.command('autocmd %s *.py call %s()' %
+                    (mapping[hook], _vim_name(name)))
 
     def _add_command(self, name, callback, key, prefix, prekey):
+        self._add_function(name, callback, prefix)
+        if key is not None:
+            key = prekey + key.replace(' ', '')
+            vim.command('map %s :call %s()' % (key, _vim_name(name)))
+
+    def _add_function(self, name, callback, prefix=False):
         globals()[name] = callback
         arg = '0' if prefix else ''
         vim.command('function! %s()\n' % _vim_name(name) +
                     'python ropevim.%s(%s)\n' % (name, arg) +
                     'endfunction\n')
-        if key is not None:
-            key = prekey + key.replace(' ', '')
-            vim.command('map %s :call %s()' % (key, _vim_name(name)))
 
 
 def _vim_name(name):
