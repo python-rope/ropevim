@@ -91,7 +91,7 @@ class VIMUtils(object):
         pass
 
     def find_file(self, filename, readonly=False, other=False):
-        pass
+        vim.command('e %s' % filename)
 
     def create_progress(self, name):
         return VimProgress(name)
