@@ -21,14 +21,18 @@ class VIMUtils(object):
         return ask_func(**ask_args)
 
     def ask_values(self, prompt, values, default=None, starting=None, exact=True):
-        if default:
-            prompt = prompt
+        if default is not None and default in values:
+            values = list(values)
+            values.remove(default)
+            values.insert(0, default)
         numbered = [prompt]
         for index, value in enumerate(values):
             numbered.append('%s. %s' % (index + 1, value))
         result = int(call('inputlist(%s)' % numbered))
         if result != 0:
             return values[result - 1]
+        elif 'cancel' in values:
+            return 'cancel'
 
     def ask(self, prompt, default=None, starting=None):
         if starting is None:
