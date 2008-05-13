@@ -41,7 +41,7 @@ class VIMUtils(object):
         return call('confirm("%s")' % prompt)
 
     def y_or_n(self, prompt):
-        pass
+        self.yes_or_no(prompt)
 
     def get(self, name):
         pass
