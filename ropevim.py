@@ -38,10 +38,10 @@ class VIMUtils(object):
         echo(message)
 
     def yes_or_no(self, prompt):
-        return call('confirm("%s")' % prompt)
+        return self.ask_values(prompt, ['yes', 'no']) == 'yes'
 
     def y_or_n(self, prompt):
-        self.yes_or_no(prompt)
+        return self.yes_or_no(prompt)
 
     def get(self, name):
         pass
@@ -88,7 +88,13 @@ class VIMUtils(object):
         pass
 
     def reload_files(self, filenames, moves={}):
-        pass
+        initial = self.filename()
+        for filename in filenames:
+            if filename in moves:
+                filename = moves[filename]
+            self.find_file(filename)
+        if initial:
+            self.find_file(initial)
 
     def find_file(self, filename, readonly=False, other=False):
         vim.command('e %s' % filename)
