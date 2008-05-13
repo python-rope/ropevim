@@ -109,7 +109,7 @@ class VIMUtils(object):
         pass
 
     def show_doc(self, docs):
-        pass
+        echo(diffs)
 
     def preview_changes(self, diffs):
         echo(diffs)
