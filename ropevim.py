@@ -139,7 +139,7 @@ class VIMUtils(object):
         self._add_function(name, callback, prefix)
         if key is not None:
             key = prekey + key.replace(' ', '')
-            vim.command('map %s :call %s()' % (key, _vim_name(name)))
+            vim.command('map %s :call %s()<cr>' % (key, _vim_name(name)))
 
     def _add_function(self, name, callback, prefix=False):
         globals()[name] = callback
