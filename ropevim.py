@@ -137,7 +137,7 @@ class VIMUtils(object):
 
     def _add_function(self, name, callback, prefix=False):
         globals()[name] = callback
-        arg = '0' if prefix else ''
+        arg = 'None' if prefix else ''
         vim.command('function! %s()\n' % _vim_name(name) +
                     'python ropevim.%s(%s)\n' % (name, arg) +
                     'endfunction\n')
