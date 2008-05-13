@@ -112,7 +112,8 @@ class VIMUtils(object):
         pass
 
     def preview_changes(self, diffs):
-        pass
+        echo(diffs)
+        return self.y_or_n('Do the changes?')
 
     def local_command(self, name, callback, key=None, prefix=False):
         self._add_command(name, callback, key, prefix, prekey='<F12>r')
