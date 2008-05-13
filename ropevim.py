@@ -21,15 +21,19 @@ class VIMUtils(object):
         return ask_func(**ask_args)
 
     def ask_values(self, prompt, values, default=None, starting=None, exact=True):
-        echo(prompt)
-        numbered = []
+        if default:
+            prompt = prompt
+        numbered = [prompt]
         for index, value in enumerate(values):
-            numbered.append('%s. %s' % (index, value))
-        result = call('inputlist(%s)' % numbered)
-        return values[int(result)]
+            numbered.append('%s. %s' % (index + 1, value))
+        result = int(call('inputlist(%s)' % numbered))
+        if result != 0:
+            return values[result - 1]
 
     def ask(self, prompt, default=None, starting=None):
-        return call('input("%s")' % prompt)
+        if starting is None:
+            starting = ''
+        return call('input("%s", "%s")' % (prompt, starting))
 
     def ask_directory(self, prompt, default=None, starting=None):
         return call('browsedir("%s", ".")' % prompt)
