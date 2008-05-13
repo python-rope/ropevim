@@ -36,7 +36,7 @@ class VIMUtils(object):
         return call('input("%s", "%s")' % (prompt, starting))
 
     def ask_directory(self, prompt, default=None, starting=None):
-        return call('browsedir("%s", ".")' % prompt)
+        return call('input("%s", ".", "dir")' % prompt)
 
     def message(self, message):
         echo(message)
