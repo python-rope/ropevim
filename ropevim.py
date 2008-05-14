@@ -74,7 +74,7 @@ class VIMUtils(object):
         pass
 
     def goto_line(self, lineno):
-        pass
+        vim.current.window.cursor = (lineno, 0)
 
     def insert_line(self, line, lineno):
         vim.current.buffer[lineno:lineno] = line
