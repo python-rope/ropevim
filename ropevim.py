@@ -52,7 +52,7 @@ class VIMUtils(object):
         return self.yes_or_no(prompt)
 
     def get(self, name):
-        pass
+        return vim.eval('g:ropevim_%s' % name)
 
     def get_offset(self):
         lineno, colno = vim.current.window.cursor
@@ -192,6 +192,20 @@ def call(command):
     return vim.eval('s:result')
 
 
+variables = {'ropevim_enable_autoimport': 1,
+             'ropevim_autoimport_underlineds': 0,
+             'ropevim_codeassist_maxfixes' : 1,
+             'ropevim_separate_doc_buffer' : 1,
+             'ropevim_autoimport_modules': '""',
+             'ropevim_confirm_saving': 0}
+
+def _init_variables():
+    for variable, default in variables.items():
+        print variable, default
+        vim.command('if !exists("g:%s")\n' % variable +
+                    '  let g:%s = %s\n' % (variable, default))
+
 ropemode.decorators.logger.message = echo
 _interface = ropemode.interface.RopeMode(env=VIMUtils())
+_init_variables()
 _interface.init()
