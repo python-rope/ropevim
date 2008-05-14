@@ -130,10 +130,12 @@ class VIMUtils(object):
         return self.y_or_n('Do the changes?')
 
     def local_command(self, name, callback, key=None, prefix=False):
-        self._add_command(name, callback, key, prefix, prekey='<F12>r')
+        self._add_command(name, callback, key, prefix,
+                          prekey=self.get('local_prefix'))
 
     def global_command(self, name, callback, key=None, prefix=False):
-        self._add_command(name, callback, key, prefix, prekey='<F12>p')
+        self._add_command(name, callback, key, prefix,
+                          prekey=self.get('global_prefix'))
 
     def add_hook(self, name, callback, hook):
         mapping = {'before_save': 'FileWritePre,BufWritePre',
@@ -197,15 +199,16 @@ variables = {'ropevim_enable_autoimport': 1,
              'ropevim_codeassist_maxfixes' : 1,
              'ropevim_separate_doc_buffer' : 1,
              'ropevim_autoimport_modules': '""',
-             'ropevim_confirm_saving': 0}
+             'ropevim_confirm_saving': 0,
+             'ropevim_local_prefix': '"<F12>r"',
+             'ropevim_global_prefix': '"<F12>p"'}
 
 def _init_variables():
     for variable, default in variables.items():
-        print variable, default
         vim.command('if !exists("g:%s")\n' % variable +
                     '  let g:%s = %s\n' % (variable, default))
 
 ropemode.decorators.logger.message = echo
-_interface = ropemode.interface.RopeMode(env=VIMUtils())
 _init_variables()
+_interface = ropemode.interface.RopeMode(env=VIMUtils())
 _interface.init()
