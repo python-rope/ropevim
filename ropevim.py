@@ -150,7 +150,10 @@ class VIMUtils(object):
         return prefix
 
     def show_occurrences(self, locations):
-        pass
+        result = []
+        for location in locations:
+            result.append('%s:%s %s' % location)
+        echo('\n'.join(result))
 
     def show_doc(self, docs, altview=False):
         if docs:
