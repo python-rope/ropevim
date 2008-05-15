@@ -198,18 +198,31 @@ def call(command):
 variables = {'ropevim_enable_autoimport': 1,
              'ropevim_autoimport_underlineds': 0,
              'ropevim_codeassist_maxfixes' : 1,
-             'ropevim_separate_doc_buffer' : 1,
+             'ropevim_enable_shortcuts' : 1,
              'ropevim_autoimport_modules': '""',
              'ropevim_confirm_saving': 0,
              'ropevim_local_prefix': '"<C-c>r"',
              'ropevim_global_prefix': '"<C-x>p"'}
+
+shortcuts = {'code_assist': '<M-/>',
+             'lucky_assist': '<M-?>',
+             'goto_definition': '<C-c>g',
+             'show_doc': '<C-c>d',
+             'find_occurrences': '<C-c>f'}
 
 def _init_variables():
     for variable, default in variables.items():
         vim.command('if !exists("g:%s")\n' % variable +
                     '  let g:%s = %s\n' % (variable, default))
 
+def _enable_shortcuts():
+    if VIMUtils().get('enable_shortcuts'):
+        for command, shortcut in shortcuts.items():
+            vim.command('map %s :call %s()<cr>' %
+                        (shortcut, _vim_name(command)))
+
 ropemode.decorators.logger.message = echo
 _init_variables()
 _interface = ropemode.interface.RopeMode(env=VIMUtils())
 _interface.init()
+_enable_shortcuts()
