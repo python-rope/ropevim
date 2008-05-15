@@ -90,7 +90,6 @@ class VIMUtils(object):
 
     def insert(self, text):
         lineno, colno = vim.current.window.cursor
-        print lineno, colno
         line = self.buffer[lineno - 1]
         self.buffer[lineno - 1] = line[:colno] + text + line[colno:]
         vim.current.window.cursor = (lineno, colno + len(text))
