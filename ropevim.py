@@ -71,7 +71,7 @@ class VIMUtils(object):
         return vim.current.buffer.name
 
     def is_modified(self):
-        pass
+        return vim.eval('&modified')
 
     def goto_line(self, lineno):
         vim.current.window.cursor = (lineno, 0)
