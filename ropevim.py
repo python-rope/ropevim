@@ -92,8 +92,8 @@ class VIMUtils(object):
                 result.append(buffer.name)
         return result
 
-    def save_files(self, filenames, ask=False):
-        pass
+    def save_files(self, filenames):
+        vim.command('wall')
 
     def reload_files(self, filenames, moves={}):
         initial = self.filename()
