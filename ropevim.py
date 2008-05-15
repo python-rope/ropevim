@@ -201,8 +201,8 @@ variables = {'ropevim_enable_autoimport': 1,
              'ropevim_separate_doc_buffer' : 1,
              'ropevim_autoimport_modules': '""',
              'ropevim_confirm_saving': 0,
-             'ropevim_local_prefix': '"<F12>r"',
-             'ropevim_global_prefix': '"<F12>p"'}
+             'ropevim_local_prefix': '"<C-c>r"',
+             'ropevim_global_prefix': '"<C-x>p"'}
 
 def _init_variables():
     for variable, default in variables.items():
