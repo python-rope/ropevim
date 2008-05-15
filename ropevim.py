@@ -55,20 +55,29 @@ class VIMUtils(object):
         return vim.eval('g:ropevim_%s' % name)
 
     def get_offset(self):
-        lineno, colno = vim.current.window.cursor
+        result = self._position_to_offset(*vim.current.window.cursor)
+        return result
+
+    def _position_to_offset(self, lineno, colno):
         result = colno
-        for line in vim.current.buffer[:lineno-1]:
+        for line in self.buffer[:lineno-1]:
             result += len(line) + 1
         return result
 
     def get_text(self):
-        return '\n'.join(vim.current.buffer) + '\n'
+        return '\n'.join(self.buffer) + '\n'
 
     def get_region(self):
-        pass
+        start = self._position_to_offset(*self.buffer.mark('<'))
+        end = self._position_to_offset(*self.buffer.mark('>'))
+        return start, end
+
+    @property
+    def buffer(self):
+        return vim.current.buffer
 
     def filename(self):
-        return vim.current.buffer.name
+        return self.buffer.name
 
     def is_modified(self):
         return vim.eval('&modified')
@@ -77,27 +86,27 @@ class VIMUtils(object):
         vim.current.window.cursor = (lineno, 0)
 
     def insert_line(self, line, lineno):
-        vim.current.buffer[lineno - 1:lineno - 1] = [line]
+        self.buffer[lineno - 1:lineno - 1] = [line]
 
     def insert(self, text):
         lineno, colno = vim.current.window.cursor
         print lineno, colno
-        line = vim.current.buffer[lineno - 1]
-        vim.current.buffer[lineno - 1] = line[:colno] + text + line[colno:]
+        line = self.buffer[lineno - 1]
+        self.buffer[lineno - 1] = line[:colno] + text + line[colno:]
         vim.current.window.cursor = (lineno, colno + len(text))
 
     def delete(self, start, end):
-        lineno1, colno1 = self._get_position(start)
-        lineno2, colno2 = self._get_position(end)
+        lineno1, colno1 = self._offset_to_position(start)
+        lineno2, colno2 = self._offset_to_position(end)
         lineno, colno = vim.current.window.cursor
         if lineno1 == lineno2:
-            line = vim.current.buffer[lineno1 - 1]
-            vim.current.buffer[lineno1 - 1] = line[:colno1] + line[colno2:]
+            line = self.buffer[lineno1 - 1]
+            self.buffer[lineno1 - 1] = line[:colno1] + line[colno2:]
             if lineno == lineno1 and colno >= colno1:
                 diff = colno2 - colno1
                 vim.current.window.cursor = (lineno, max(0, colno - diff))
 
-    def _get_position(self, offset):
+    def _offset_to_position(self, offset):
         text = self.get_text()
         lineno = text.count('\n', 0, offset) + 1
         try:
