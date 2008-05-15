@@ -122,8 +122,9 @@ class VIMUtils(object):
     def show_occurrences(self, locations):
         pass
 
-    def show_doc(self, docs):
-        echo(diffs)
+    def show_doc(self, docs, altview=False):
+        if docs:
+            echo(docs)
 
     def preview_changes(self, diffs):
         echo(diffs)
