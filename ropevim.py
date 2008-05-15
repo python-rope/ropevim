@@ -25,9 +25,9 @@ class VIMUtils(object):
             values = list(values)
             values.remove(default)
             values.insert(0, default)
-        numbered = [prompt]
+        numbered = [str(prompt)]
         for index, value in enumerate(values):
-            numbered.append('%s. %s' % (index + 1, value))
+            numbered.append('%s. %s' % (index + 1, str(value)))
         result = int(call('inputlist(%s)' % numbered))
         if result != 0:
             return values[result - 1]
@@ -77,13 +77,34 @@ class VIMUtils(object):
         vim.current.window.cursor = (lineno, 0)
 
     def insert_line(self, line, lineno):
-        vim.current.buffer[lineno:lineno] = line
+        vim.current.buffer[lineno - 1:lineno - 1] = [line]
 
     def insert(self, text):
-        pass
+        lineno, colno = vim.current.window.cursor
+        print lineno, colno
+        line = vim.current.buffer[lineno - 1]
+        vim.current.buffer[lineno - 1] = line[:colno] + text + line[colno:]
+        vim.current.window.cursor = (lineno, colno + len(text))
 
     def delete(self, start, end):
-        pass
+        lineno1, colno1 = self._get_position(start)
+        lineno2, colno2 = self._get_position(end)
+        lineno, colno = vim.current.window.cursor
+        if lineno1 == lineno2:
+            line = vim.current.buffer[lineno1 - 1]
+            vim.current.buffer[lineno1 - 1] = line[:colno1] + line[colno2:]
+            if lineno == lineno1 and colno >= colno1:
+                diff = colno2 - colno1
+                vim.current.window.cursor = (lineno, max(0, colno - diff))
+
+    def _get_position(self, offset):
+        text = self.get_text()
+        lineno = text.count('\n', 0, offset) + 1
+        try:
+            colno = offset - text.rindex('\n', 0, offset) - 2
+        except ValueError:
+            colno = offset
+        return lineno, colno
 
     def filenames(self):
         result = []
