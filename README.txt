@@ -17,16 +17,140 @@ Setting Up
 ==========
 
 
+Getting Started
+===============
+
+Enabling Autoimport
+-------------------
+
+Rope can propose and automatically import global names in other
+modules.  Rope maintains a cache of global names for each project.  It
+updates the cache only when modules are changed; if you want to cache
+all your modules at once, use ``RopeGenerateAutoimportCache``.  It
+will cache all of the modules inside the project plus those whose
+names are listed in ``ropevim_autoimport_modules`` list::
+
+  # add the name of modules you want to autoimport
+  let g:ropevim_autoimport_modules = ["os", "shutil"]
+
+Now if you are in a buffer that contains::
+
+  rmtree
+
+and you execute ``RopevimAutoImport`` you'll end up with::
+
+  from shutil import rmtree
+  rmtree
+
+Also ``RopeCodeAssist`` and ``RopeLuckyAssist`` propose auto-imported
+names by using ``name : module`` style.  Selecting them will import
+the module automatically.
+
+
+Filtering Resources
+-------------------
+
+Some refactorings, restructuring and find occurrences take an option
+called resources.  This option can be used to limit the resources on
+which a refactoring should be applied.
+
+It uses a simple format: each line starts with either '+' or '-'.
+Each '+' means include the file (or its children if it's a folder)
+that comes after it.  '-' has the same meaning for exclusion.  So
+using::
+
+  +rope
+  +ropetest
+  -rope/contrib
+
+means include all python files inside ``rope`` and ``ropetest``
+folders and their subfolder, but those that are in ``rope/contrib``.
+Or::
+
+  -ropetest
+  -setup.py
+
+means include all python files inside the project but ``setup.py`` and
+those under ``ropetest`` folder.
+
+
+Finding Occurrences
+-------------------
+
+The find occurrences command (``C-c f`` by default) can be used to
+find the occurrences of a python name.  If ``unsure`` option is
+``yes``, it will also show unsure occurrences; unsure occurrences are
+indicated with a ``?`` mark in the end.
+
+
+Dialog ``batchset`` Command
+---------------------------
+
+When you use ropevim dialogs there is a command called ``batchset``.
+It can set many options at the same time.  After selecting this
+command from dialog base prompt, you are asked to enter a string.
+
+``batchset`` strings can set the value of configs in two ways.  The
+single line form is like this::
+
+  name1 value1
+  name2 value2
+
+That is the name of config is followed its value.  For multi-line
+values you can use::
+
+  name1
+   line1
+   line2
+
+  name2
+   line3
+
+Each line of the definition should start with a space or a tab.  Note
+that blank lines before the name of config definitions are ignored.
+
+``batchset`` command is useful when performing refactorings with long
+configs, like restructurings::
+
+  pattern ${pycore}.create_module(${project}.root, ${name})
+
+  goal generate.create_module(${project}, ${name})
+
+  imports
+   from rope.contrib import generate
+
+  args
+   pycore: type=rope.base.pycore.PyCore
+   project: type=rope.base.project.Project
+
+.. ignore the two-space indents
+
+This is a valid ``batchset`` string for restructurings.  When using
+batchset, you usually want to skip initial questions.  That can be
+done by prefixing refactorings.
+
+Just for the sake of completeness, the reverse of the above
+restructuring can be::
+
+  pattern ${create_module}(${project}, ${name})
+
+  goal ${project}.pycore.create_module(${project}.root, ${name})
+
+  args
+   create_module: name=rope.contrib.generate.create_module
+   project: type=rope.base.project.Project
+
+
 Variables
 =========
 
 * ``ropevim_codeassist_maxfixes``: The maximum number of syntax errors
   to fix for code assists.  The default value is ``1``.
-* ``ropevim_local_prefix``: The prefix for ropemacs refactorings.
+* ``ropevim_local_prefix``: The prefix for ropevim refactorings.
   Defaults to ``C-c r``.
-* ``ropevim_global_prefix``: The prefix for ropemacs project commands
+* ``ropevim_global_prefix``: The prefix for ropevim project commands
   Defaults to ``C-x p``.
-* ``ropevim_enable_shortcuts``: Shows whether to bind ropemacs
+* ``ropevim_enable_shortcuts``: Shows whether to bind ropevim
   shortcuts keys.  Defaults to ``t``.
 
 * ``ropevim_enable_autoimport``: Shows whether to enable autoimport.
