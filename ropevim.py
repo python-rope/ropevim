@@ -233,7 +233,7 @@ variables = {'ropevim_enable_autoimport': 1,
              'ropevim_autoimport_underlineds': 0,
              'ropevim_codeassist_maxfixes' : 1,
              'ropevim_enable_shortcuts' : 1,
-             'ropevim_autoimport_modules': '""',
+             'ropevim_autoimport_modules': '[]',
              'ropevim_confirm_saving': 0,
              'ropevim_local_prefix': '"<C-c>r"',
              'ropevim_global_prefix': '"<C-x>p"'}
