@@ -16,6 +16,21 @@ New Features
 Setting Up
 ==========
 
+First add ropevim folder to the ``PYTHONPATH`` (or install it using
+``python setup.py install``).
+
+Then load ``ropevim.vim`` in vim.  That can be done either by adding
+``source path/to/ropevim.vim`` to your ``~/.vimrc`` or copying it to
+``~/.vim/plugin/`` folder.
+
+If you don't want to install rope and ropevim you can add something
+like this to your ``~/.vimrc``::
+
+  let $PYTHONPATH .= ":/path/to/rope:/path/to/ropevim"
+  source /path/to/ropevim.vim
+
+For using the repository version of rope, see ``docs/ropevim.txt``.
+
 
 Getting Started
 ===============
