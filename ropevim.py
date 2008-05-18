@@ -7,7 +7,12 @@ import vim
 
 class VimUtils(ropemode.environment.Environment):
 
-    def ask_values(self, prompt, values, default=None, starting=None, exact=True):
+    def ask(self, prompt, default=None, starting=None):
+        if starting is None:
+            starting = ''
+        return call('input("%s", "%s")' % (prompt, starting))
+
+    def ask_values(self, prompt, values, default=None, starting=None):
         if default is not None and default in values:
             values = list(values)
             values.remove(default)
@@ -21,13 +26,11 @@ class VimUtils(ropemode.environment.Environment):
         elif 'cancel' in values:
             return 'cancel'
 
-    def ask(self, prompt, default=None, starting=None):
-        if starting is None:
-            starting = ''
-        return call('input("%s", "%s")' % (prompt, starting))
-
     def ask_directory(self, prompt, default=None, starting=None):
         return call('input("%s", ".", "dir")' % prompt)
+
+    def ask_completion(self, prompt, values, starting=None):
+        return self.ask_values(prompt, values, starting=starting)
 
     def message(self, message):
         echo(message)
