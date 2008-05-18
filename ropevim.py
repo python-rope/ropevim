@@ -204,16 +204,21 @@ class VimProgress(object):
 
     def __init__(self, name):
         self.name = name
-        self.update(0)
+        self.last = 0
+        self.per_dot = 2
+        echo('%s ' % self.name)
 
     def update(self, percent):
-        if percent != 0:
-            echo('%s ... %s%%%%' % (self.name, percent))
-        else:
-            echo('%s ... ' % self.name)
+        dots = (100 - self.last) / self.per_dot
+        if dots:
+            self.last += dots * self.per_dot
+            self._echon('.' * dots)
 
     def done(self):
-        echo('%s ... done' % self.name)
+        self._echon(' done')
+
+    def _echon(self, message):
+        vim.command('echon "%s"' % message)
 
 
 class _VIMDo(object):
