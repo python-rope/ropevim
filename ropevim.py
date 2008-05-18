@@ -8,18 +8,6 @@ from rope.base import taskhandle
 
 class VIMUtils(object):
 
-    def askdata(self, data, starting=None):
-        """`data` is a `ropemode.dialog.Data` object"""
-        ask_func = self.ask
-        ask_args = {'prompt': data.prompt, 'starting': starting,
-                    'default': data.default}
-        if data.values:
-            ask_func = self.ask_values
-            ask_args['values'] = data.values
-        elif data.kind == 'directory':
-            ask_func = self.ask_directory
-        return ask_func(**ask_args)
-
     def ask_values(self, prompt, values, default=None, starting=None, exact=True):
         if default is not None and default in values:
             values = list(values)
