@@ -5,7 +5,7 @@ import ropemode.environment
 import vim
 
 
-class VIMUtils(ropemode.environment.Environment):
+class VimUtils(ropemode.environment.Environment):
 
     def ask_values(self, prompt, values, default=None, starting=None, exact=True):
         if default is not None and default in values:
@@ -208,11 +208,6 @@ class VimProgress(object):
         vim.command('echon "%s"' % message)
 
 
-class _VIMDo(object):
-
-    def __call__(self, *args):
-        vim.command.do('call ')
-
 def echo(message):
     vim.command('echo "%s"' % message)
 
@@ -242,13 +237,13 @@ def _init_variables():
                     '  let g:%s = %s\n' % (variable, default))
 
 def _enable_shortcuts():
-    if VIMUtils().get('enable_shortcuts'):
+    if VimUtils().get('enable_shortcuts'):
         for command, shortcut in shortcuts.items():
             vim.command('map %s :call %s()<cr>' %
                         (shortcut, _vim_name(command)))
 
 ropemode.decorators.logger.message = echo
 _init_variables()
-_interface = ropemode.interface.RopeMode(env=VIMUtils())
+_interface = ropemode.interface.RopeMode(env=VimUtils())
 _interface.init()
 _enable_shortcuts()
