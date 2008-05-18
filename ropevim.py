@@ -6,7 +6,7 @@ import vim
 from rope.base import taskhandle
 
 
-class VIMUtils(object):
+class VIMUtils(ropemode.interface.Environment):
 
     def ask_values(self, prompt, values, default=None, starting=None, exact=True):
         if default is not None and default in values:
