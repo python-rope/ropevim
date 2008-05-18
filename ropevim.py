@@ -1,12 +1,11 @@
 """ropevim, a vim mode for using rope refactoring library"""
 import ropemode.decorators
-import ropemode.dialog
 import ropemode.interface
+import ropemode.environment
 import vim
-from rope.base import taskhandle
 
 
-class VIMUtils(ropemode.interface.Environment):
+class VIMUtils(ropemode.environment.Environment):
 
     def ask_values(self, prompt, values, default=None, starting=None, exact=True):
         if default is not None and default in values:
