@@ -142,6 +142,8 @@ class VimUtils(ropemode.environment.Environment):
     def find_file(self, filename, readonly=False, other=False):
         if filename != self.filename():
             vim.command('e %s' % filename)
+            if readonly:
+                vim.command('set nomodifiable')
 
     def create_progress(self, name):
         return VimProgress(name)
