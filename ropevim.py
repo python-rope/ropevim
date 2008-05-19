@@ -140,7 +140,8 @@ class VimUtils(ropemode.environment.Environment):
             self.find_file(initial)
 
     def find_file(self, filename, readonly=False, other=False):
-        vim.command('e %s' % filename)
+        if filename != self.filename():
+            vim.command('e %s' % filename)
 
     def create_progress(self, name):
         return VimProgress(name)
@@ -149,7 +150,7 @@ class VimUtils(ropemode.environment.Environment):
         pass
 
     def push_mark(self):
-        pass
+        vim.command('mark `')
 
     def prefix_value(self, prefix):
         return prefix
