@@ -15,14 +15,20 @@ class VimUtils(ropemode.environment.Environment):
     def ask_values(self, prompt, values, default=None, starting=None):
         if len(values) < 14:
             self._print_values(values)
-        starting = starting or default or ''
+        if default is not None:
+            prompt = prompt + ('[%s] ' % default)
+        starting = starting or ''
         _completer.values = values
         answer = call('input("%s", "%s", "customlist,RopeValueCompleter")' %
                       (prompt, starting))
+        if answer is None:
+            if 'cancel' in values:
+                return 'cancel'
+            return
+        if not answer:
+            return default
         if answer.isdigit() and 0 <= int(answer) < len(values):
             return values[int(answer)]
-        if not answer and 'cancel' in values:
-            return 'cancel'
         return answer
 
     def _print_values(self, values):
