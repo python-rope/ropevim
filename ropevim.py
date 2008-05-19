@@ -10,7 +10,12 @@ class VimUtils(ropemode.environment.Environment):
     def ask(self, prompt, default=None, starting=None):
         if starting is None:
             starting = ''
-        return call('input("%s", "%s")' % (prompt, starting))
+        if default is not None:
+            prompt = prompt + ('[%s] ' % default)
+        result = call('input("%s", "%s")' % (prompt, starting))
+        if default is not None and result == '':
+            return default
+        return result
 
     def ask_values(self, prompt, values, default=None, starting=None):
         if len(values) < 14:
@@ -25,7 +30,7 @@ class VimUtils(ropemode.environment.Environment):
             if 'cancel' in values:
                 return 'cancel'
             return
-        if not answer:
+        if default is not None and not answer:
             return default
         if answer.isdigit() and 0 <= int(answer) < len(values):
             return values[int(answer)]
