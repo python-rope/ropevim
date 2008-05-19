@@ -13,7 +13,8 @@ class VimUtils(ropemode.environment.Environment):
         return call('input("%s", "%s")' % (prompt, starting))
 
     def ask_values(self, prompt, values, default=None, starting=None):
-        self._print_values(values)
+        if len(values) < 14:
+            self._print_values(values)
         starting = starting or default or ''
         _completer.values = values
         answer = call('input("%s", "%s", "customlist,RopeValueCompleter")' %
