@@ -16,7 +16,7 @@ class VimUtils(ropemode.environment.Environment):
         self._print_values(values)
         starting = starting or default or ''
         _completer.values = values
-        answer = call('input("%s", "%s", "customlist,RopeCompleter")' %
+        answer = call('input("%s", "%s", "customlist,RopeValueCompleter")' %
                       (prompt, starting))
         if answer.isdigit() and 0 <= int(answer) < len(values):
             return values[int(answer)]
@@ -228,7 +228,7 @@ class _ValueCompleter(object):
     def __init__(self):
         self.values = []
         vim.command('python import vim')
-        vim.command('function! RopeCompleter(A, L, P)\n'
+        vim.command('function! RopeValueCompleter(A, L, P)\n'
                     'python args = [vim.eval("a:" + p) for p in "ALP"]\n'
                     'python ropevim._completer(*args)\n'
                     'return s:completions\n'
