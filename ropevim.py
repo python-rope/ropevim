@@ -141,6 +141,8 @@ class VimUtils(ropemode.environment.Environment):
 
     def find_file(self, filename, readonly=False, other=False):
         if filename != self.filename():
+            if other:
+                vim.command('new')
             vim.command('e %s' % filename)
             if readonly:
                 vim.command('set nomodifiable')
