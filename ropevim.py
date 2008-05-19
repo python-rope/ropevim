@@ -13,18 +13,22 @@ class VimUtils(ropemode.environment.Environment):
         return call('input("%s", "%s")' % (prompt, starting))
 
     def ask_values(self, prompt, values, default=None, starting=None):
-        if default is not None and default in values:
-            values = list(values)
-            values.remove(default)
-            values.insert(0, default)
-        numbered = [str(prompt)]
-        for index, value in enumerate(values):
-            numbered.append('%s. %s' % (index + 1, str(value)))
-        result = int(call('inputlist(%s)' % numbered))
-        if result != 0:
-            return values[result - 1]
-        elif 'cancel' in values:
+        self._print_values(values)
+        starting = starting or default or ''
+        _completer.values = values
+        answer = call('input("%s", "%s", "customlist,RopeCompleter")' %
+                      (prompt, starting))
+        if answer.isdigit() and 0 <= int(answer) < len(values):
+            return values[int(answer)]
+        if not answer and 'cancel' in values:
             return 'cancel'
+        return answer
+
+    def _print_values(self, values):
+        numbered = []
+        for index, value in enumerate(values):
+            numbered.append('%s. %s' % (index, str(value)))
+        echo('\n'.join(numbered) + '\n')
 
     def ask_directory(self, prompt, default=None, starting=None):
         return call('input("%s", ".", "dir")' % prompt)
@@ -219,6 +223,22 @@ def call(command):
     return vim.eval('s:result')
 
 
+class _ValueCompleter(object):
+
+    def __init__(self):
+        self.values = []
+        vim.command('python import vim')
+        vim.command('function! RopeCompleter(A, L, P)\n'
+                    'python args = [vim.eval("a:" + p) for p in "ALP"]\n'
+                    'python ropevim._completer(*args)\n'
+                    'return s:completions\n'
+                    'endfunction\n')
+
+    def __call__(self, arg_lead, cmd_line, cursor_pos):
+        result = [value for value in self.values if value.startswith(arg_lead)]
+        vim.command('let s:completions = %s' % result)
+
+
 variables = {'ropevim_enable_autoimport': 1,
              'ropevim_autoimport_underlineds': 0,
              'ropevim_codeassist_maxfixes' : 1,
@@ -246,6 +266,8 @@ def _enable_shortcuts():
                         (shortcut, _vim_name(command)))
 
 ropemode.decorators.logger.message = echo
+_completer = _ValueCompleter()
+
 _init_variables()
 _interface = ropemode.interface.RopeMode(env=VimUtils())
 _interface.init()
