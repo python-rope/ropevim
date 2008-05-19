@@ -160,7 +160,8 @@ class VimUtils(ropemode.environment.Environment):
     def show_occurrences(self, locations):
         result = []
         for location in locations:
-            result.append('%s:%s %s' % location)
+            result.append('%s:%s %s' % (location.filename,
+                                        location.lineno, location.note))
         echo('\n'.join(result))
 
     def show_doc(self, docs, altview=False):
@@ -214,20 +215,15 @@ class VimProgress(object):
     def __init__(self, name):
         self.name = name
         self.last = 0
-        self.per_dot = 2
-        echo('%s ' % self.name)
+        echo('%s ... ' % self.name)
 
     def update(self, percent):
-        dots = (100 - self.last) / self.per_dot
-        if dots:
-            self.last += dots * self.per_dot
-            self._echon('.' * dots)
+        if percent > self.last + 4:
+            echo('%s ... %s%%%%' % (self.name, percent))
+            self.last = percent
 
     def done(self):
-        self._echon(' done')
-
-    def _echon(self, message):
-        vim.command('echon "%s"' % message)
+        echo('%s ... done' % self.name)
 
 
 def echo(message):
