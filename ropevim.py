@@ -1,7 +1,10 @@
 """ropevim, a vim mode for using rope refactoring library"""
+import os
+import tempfile
+
 import ropemode.decorators
-import ropemode.interface
 import ropemode.environment
+import ropemode.interface
 import vim
 
 
@@ -160,11 +163,31 @@ class VimUtils(ropemode.environment.Environment):
         return prefix
 
     def show_occurrences(self, locations):
-        result = []
-        for location in locations:
-            result.append('%s:%s %s' % (location.filename,
-                                        location.lineno, location.note))
-        echo('\n'.join(result))
+        self._quickfixdefs(locations)
+
+    def _quickfixdefs(self, locations):
+        filename = os.path.join(tempfile.gettempdir(), tempfile.mktemp())
+        try:
+            self._writedefs(locations, filename)
+            vim.command('let old_errorfile = &errorfile')
+            vim.command('let old_errorformat = &errorformat')
+            vim.command('set errorformat=\%f:\%l:\ \%m')
+            vim.command('cfile ' + filename)
+            vim.command('let &errorformat = old_errorformat')
+            vim.command('let &errorfile = old_errorfile')
+        finally:
+            os.remove(filename)
+
+    def _writedefs(self, locations, filename):
+        tofile = open(filename, 'w')
+        try:
+            for location in locations:
+                err = '%s:%d %s\n' % (location.filename,
+                                      location.lineno, location.note)
+                echo(err)
+                tofile.write(err)
+        finally:
+            tofile.close()
 
     def show_doc(self, docs, altview=False):
         if docs:
