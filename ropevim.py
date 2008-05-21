@@ -136,14 +136,12 @@ class VimUtils(ropemode.environment.Environment):
     def reload_files(self, filenames, moves={}):
         initial = self.filename()
         for filename in filenames:
-            if filename in moves:
-                filename = moves[filename]
-            self.find_file(filename)
+            self.find_file(moves.get(filename, filename), force=True)
         if initial:
             self.find_file(initial)
 
-    def find_file(self, filename, readonly=False, other=False):
-        if filename != self.filename():
+    def find_file(self, filename, readonly=False, other=False, force=False):
+        if filename != self.filename() or force:
             if other:
                 vim.command('new')
             vim.command('e %s' % filename)
