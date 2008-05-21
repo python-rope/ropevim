@@ -305,8 +305,8 @@ def _init_variables():
         vim.command('if !exists("g:%s")\n' % variable +
                     '  let g:%s = %s\n' % (variable, default))
 
-def _enable_shortcuts():
-    if VimUtils().get('enable_shortcuts'):
+def _enable_shortcuts(env):
+    if env.get('enable_shortcuts'):
         for command, shortcut in shortcuts.items():
             vim.command('map %s :call %s()<cr>' %
                         (shortcut, _vim_name(command)))
@@ -318,10 +318,30 @@ def _enable_shortcuts():
                         'endfunc')
             vim.command('imap %s <C-R>=%s()<cr>' % (shortcut, command_name))
 
+def _add_menu(env):
+    project = ['open_project', 'close_project', 'find_file', 'undo', 'redo']
+    refactor = ['rename', 'extract_variable', 'extract_method', 'inline', 'move'
+                'restructure', 'use_function', 'introduce_factory',
+                'change_signature', 'rename_current_module',
+                'move_current_module', 'module_to_package']
+    assists = ['code_assist', 'goto_definition', 'show_doc', 'find_occurrences',
+               'lucky_assist', 'jump_to_global', 'show_calltip']
+    vim.command('silent! aunmenu Ropevim')
+    for index, items in enumerate([project, assists, refactor]):
+        if index != 0:
+            vim.command('amenu <silent> &Ropevim.-SEP%s- :' % index)
+        for name in items:
+            item = '\ '.join(token.title() for token in name.split('_'))
+            vim.command('amenu <silent> &Ropevim.%s :%s<cr>' %
+                        (item, _vim_name(name)))
+
+
 ropemode.decorators.logger.message = echo
 _completer = _ValueCompleter()
 
 _init_variables()
-_interface = ropemode.interface.RopeMode(env=VimUtils())
+_env = VimUtils()
+_interface = ropemode.interface.RopeMode(env=_env)
 _interface.init()
-_enable_shortcuts()
+_enable_shortcuts(_env)
+_add_menu(_env)
