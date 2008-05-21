@@ -258,7 +258,7 @@ class VimProgress(object):
 
 
 def echo(message):
-    vim.command('echo "%s"' % message)
+    vim.command('echo "%s"' % message.replace('\n', '\\n').replace('"', '\\"'))
 
 def call(command):
     vim.command('let s:result = %s' % command)
