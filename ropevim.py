@@ -20,8 +20,9 @@ class VimUtils(ropemode.environment.Environment):
             return default
         return result
 
-    def ask_values(self, prompt, values, default=None, starting=None):
-        if len(values) < 14:
+    def ask_values(self, prompt, values, default=None,
+                   starting=None, show_values=None):
+        if show_values or (show_values is None and len(values) < 14):
             self._print_values(values)
         if default is not None:
             prompt = prompt + ('[%s] ' % default)
@@ -49,7 +50,14 @@ class VimUtils(ropemode.environment.Environment):
         return call('input("%s", ".", "dir")' % prompt)
 
     def ask_completion(self, prompt, values, starting=None):
-        return self.ask_values(prompt, values, starting=starting)
+        if self.get('vim_completion') and call('mode()') == 'i':
+            col = int(call('col(".")'))
+            if starting:
+                col -= len(starting)
+            vim.command('call complete(%s, %s)' % (col, values))
+            return None
+        return self.ask_values(prompt, values, starting=starting,
+                               show_values=False)
 
     def message(self, message):
         echo(message)
@@ -104,8 +112,8 @@ class VimUtils(ropemode.environment.Environment):
         vim.current.window.cursor = (lineno, colno + len(text))
 
     def delete(self, start, end):
-        lineno1, colno1 = self._offset_to_position(start)
-        lineno2, colno2 = self._offset_to_position(end)
+        lineno1, colno1 = self._offset_to_position(start - 1)
+        lineno2, colno2 = self._offset_to_position(end - 1)
         lineno, colno = vim.current.window.cursor
         if lineno1 == lineno2:
             line = self.buffer[lineno1 - 1]
@@ -118,7 +126,7 @@ class VimUtils(ropemode.environment.Environment):
         text = self.get_text()
         lineno = text.count('\n', 0, offset) + 1
         try:
-            colno = offset - text.rindex('\n', 0, offset) - 2
+            colno = offset - text.rindex('\n', 0, offset) - 1
         except ValueError:
             colno = offset
         return lineno, colno
@@ -280,13 +288,17 @@ variables = {'ropevim_enable_autoimport': 1,
              'ropevim_autoimport_modules': '[]',
              'ropevim_confirm_saving': 0,
              'ropevim_local_prefix': '"<C-c>r"',
-             'ropevim_global_prefix': '"<C-x>p"'}
+             'ropevim_global_prefix': '"<C-x>p"',
+             'ropevim_vim_completion': 0}
 
 shortcuts = {'code_assist': '<M-/>',
              'lucky_assist': '<M-?>',
              'goto_definition': '<C-c>g',
              'show_doc': '<C-c>d',
              'find_occurrences': '<C-c>f'}
+
+insert_shortcuts = {'code_assist': '<M-/>',
+                    'lucky_assist': '<M-?>'}
 
 def _init_variables():
     for variable, default in variables.items():
@@ -298,6 +310,13 @@ def _enable_shortcuts():
         for command, shortcut in shortcuts.items():
             vim.command('map %s :call %s()<cr>' %
                         (shortcut, _vim_name(command)))
+        for command, shortcut in insert_shortcuts.items():
+            command_name = _vim_name(command) + 'InsertMode'
+            vim.command('func! %s()\n' % command_name +
+                        'call %s()\n' % _vim_name(command) +
+                        'return ""\n'
+                        'endfunc')
+            vim.command('imap %s <C-R>=%s()<cr>' % (shortcut, command_name))
 
 ropemode.decorators.logger.message = echo
 _completer = _ValueCompleter()
