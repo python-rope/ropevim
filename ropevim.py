@@ -320,8 +320,8 @@ def _enable_shortcuts(env):
 
 def _add_menu(env):
     project = ['open_project', 'close_project', 'find_file', 'undo', 'redo']
-    refactor = ['rename', 'extract_variable', 'extract_method', 'inline', 'move'
-                'restructure', 'use_function', 'introduce_factory',
+    refactor = ['rename', 'extract_variable', 'extract_method', 'inline',
+                'move', 'restructure', 'use_function', 'introduce_factory',
                 'change_signature', 'rename_current_module',
                 'move_current_module', 'module_to_package']
     assists = ['code_assist', 'goto_definition', 'show_doc', 'find_occurrences',
