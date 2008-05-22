@@ -2,6 +2,5 @@
  Ropevim TODO
 ==============
 
-* interrupting refactorings
 * better progress bar
 * prefixing functions

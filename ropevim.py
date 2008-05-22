@@ -252,6 +252,10 @@ class VimProgress(object):
         echo('%s ... ' % self.name)
 
     def update(self, percent):
+        try:
+            vim.eval('getchar(0)')
+        except vim.error:
+            raise KeyboardInterrupt('Task %s was interrupted!' % self.name)
         if percent > self.last + 4:
             echo('%s ... %s%%%%' % (self.name, percent))
             self.last = percent
