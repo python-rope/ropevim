@@ -21,7 +21,7 @@ def get_long_description():
 
 setup(name='ropevim',
       version='0.1',
-      description='A vim mode for using rope refactoring library',
+      description='A vim plugin for using rope python refactoring library',
       long_description=get_long_description(),
       packages=['ropemode'],
       py_modules=['ropevim'],
