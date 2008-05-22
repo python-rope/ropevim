@@ -3,8 +3,8 @@
 ======================
 
 Ropevim is a vim mode that uses rope_ library to provide features like
-refactorings and code-assists.  You should install rope_ library
-before using ropevim.
+python refactorings and code-assists.  You should install rope_
+library before using ropevim.
 
 .. _rope: http://rope.sf.net/
 
@@ -12,7 +12,13 @@ before using ropevim.
 New Features
 ============
 
-See the homepage_ or ``docs/ropevim.txt`` for the list of features.
+See ``docs/ropevim.txt`` or the homepage_ for the list of features.
+
+This is the first public release.  It is mostly a testing release; yet
+most refactorings and code-assists are working.  There are still minor
+todos and probably it can be changed to be used more conveniently in
+vim (specially because it was written by a non-vimmer).  Contributions
+are welcome.
 
 .. _homepage: http://rope.sf.net/ropevim.html
 

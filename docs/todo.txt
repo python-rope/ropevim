@@ -3,5 +3,5 @@
 ==============
 
 * interrupting refactorings
-* showing progress
+* better progress bar
 * prefixing functions
