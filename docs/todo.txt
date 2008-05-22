@@ -1,0 +1,6 @@
+==============
+ Ropevim TODO
+==============
+
+* interrupting refactorings
+* showing progress
