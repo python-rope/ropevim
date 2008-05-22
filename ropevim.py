@@ -50,7 +50,7 @@ class VimUtils(ropemode.environment.Environment):
         return call('input("%s", ".", "dir")' % prompt)
 
     def ask_completion(self, prompt, values, starting=None):
-        if self.get('vim_completion') and call('mode()') == 'i':
+        if self.get('vim_completion') and 'i' in call('mode()'):
             col = int(call('col(".")'))
             if starting:
                 col -= len(starting)
@@ -69,7 +69,10 @@ class VimUtils(ropemode.environment.Environment):
         return self.yes_or_no(prompt)
 
     def get(self, name):
-        return vim.eval('g:ropevim_%s' % name)
+        result = vim.eval('g:ropevim_%s' % name)
+        if result.isdigit():
+            return result == '1'
+        return result
 
     def get_offset(self):
         result = self._position_to_offset(*vim.current.window.cursor)
