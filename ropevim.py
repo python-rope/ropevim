@@ -268,8 +268,7 @@ def echo(message):
     vim.command('echo "%s"' % message.replace('\n', '\\n').replace('"', '\\"'))
 
 def call(command):
-    vim.command('let s:result = %s' % command)
-    return vim.eval('s:result')
+    return vim.eval(command)
 
 
 class _ValueCompleter(object):
