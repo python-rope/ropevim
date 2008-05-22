@@ -12,6 +12,10 @@ before using ropevim.
 New Features
 ============
 
+See the homepage_ or ``docs/ropevim.txt`` for the list of features.
+
+.. _homepage: http://rope.sf.net/ropevim.html
+
 
 Setting Up
 ==========
@@ -35,6 +39,22 @@ For using the repository version of rope, see ``docs/ropevim.txt``.
 Getting Started
 ===============
 
+Refactoring Dialog
+------------------
+
+Ropevim refactorings use a special kind of dialog.  Depending on the
+refactoring, you'll be asked about the essential information a
+refactoring needs to know (like the new name in rename refactoring).
+
+Next you'll see the base prompt of a refactoring dialog that shows
+something like "Choose what to do".  By entering the name of a
+refactoring option you can set its value.  After setting each option
+you'll be returned back to the base prompt.  Finally, you can ask rope
+to perform, preview or cancel the refactoring.
+
+See keybinding_ section and try the refactorings yourself.
+
+
 Finding Files
 -------------
 
@@ -43,8 +63,23 @@ files in your project.  When you complete the minibuffer you'll see
 all files in the project; files are shown as their reversed paths.
 For instance ``projectroot/docs/todo.txt`` is shown like
 ``todo.txt<docs``.  This way you can find files faster in your
-project.  ``rope-find-file-other-window`` (``C-x p 4 f``) opens the
+project.  ``RopeFindFileOtherWindow`` (``C-x p 4 f``) opens the
 file in the other window.
+
+
+Code-Assist
+-----------
+
+``RopeCodeAssist`` command (``M-/``) will let you select from a list
+of completions.  ``RopeLuckyAssist`` command (``M-?``) does not ask
+anything; instead, it inserts the first proposal.
+
+You can tell ropevim to use vim's complete function in insert mode;
+Add::
+
+  let ropevim_vim_completion=1
+
+to your ``~/.vimrc`` file.
 
 
 Enabling Autoimport
@@ -107,7 +142,8 @@ Finding Occurrences
 The find occurrences command (``C-c f`` by default) can be used to
 find the occurrences of a python name.  If ``unsure`` option is
 ``yes``, it will also show unsure occurrences; unsure occurrences are
-indicated with a ``?`` mark in the end.
+indicated with a ``?`` mark in the end.  Note that ropevim uses the
+quickfix feature of vim for marking occurrence locations.
 
 
 Dialog ``batchset`` Command
@@ -179,9 +215,8 @@ Variables
   shortcuts keys.  Defaults to ``t``.
 
 * ``ropevim_enable_autoimport``: Shows whether to enable autoimport.
-  Defaults to ``nil``.
 * ``ropevim_autoimport_modules``: The name of modules whose global
-  names should be cached.  `rope-generate-autoimport-cache' reads this
+  names should be cached.  `RopeGenerateAutoimportCache' reads this
   list and fills its cache.
 * ``ropevim_autoimport_underlineds``: If set, autoimport will cache
   names starting with underlines, too.
