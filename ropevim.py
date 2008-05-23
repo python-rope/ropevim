@@ -343,6 +343,7 @@ def _add_menu(env):
 
 
 ropemode.decorators.logger.message = echo
+ropemode.decorators.logger.only_short = True
 _completer = _ValueCompleter()
 
 _init_variables()
