@@ -12,15 +12,9 @@ library before using ropevim.
 New Features
 ============
 
-See ``docs/ropevim.txt`` or the homepage_ for the list of features.
-
-This is the first public release.  It is mostly a testing release; yet
-most refactorings and code-assists are working.  There are still minor
-todos and probably it can be changed to be used more conveniently in
-vim (specially because it was written by a non-vimmer).  Contributions
-are welcome.
-
-.. _homepage: http://rope.sf.net/ropevim.html
+* interrupting refactorings
+* not showing python traceback for bad inputs
+* added RopeRunModule command for dynamic object analysis
 
 
 Setting Up
