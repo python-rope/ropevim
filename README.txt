@@ -12,10 +12,6 @@ library before using ropevim.
 New Features
 ============
 
-* interrupting refactorings
-* not showing python traceback for bad inputs
-* added RopeRunModule command for dynamic object analysis
-
 
 Setting Up
 ==========
