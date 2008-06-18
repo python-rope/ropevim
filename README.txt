@@ -208,7 +208,10 @@ Variables
 * ``ropevim_global_prefix``: The prefix for ropevim project commands
   Defaults to ``C-x p``.
 * ``ropevim_enable_shortcuts``: Shows whether to bind ropevim
-  shortcuts keys.  Defaults to ``t``.
+  shortcuts keys.  Defaults to ``1``.
+* ``ropevim_guess_project``: If non-zero, ropevim tries to guess and
+  open the project that contains the file on which a ropevim command
+  is performed when no project is already open.
 
 * ``ropevim_enable_autoimport``: Shows whether to enable autoimport.
 * ``ropevim_autoimport_modules``: The name of modules whose global

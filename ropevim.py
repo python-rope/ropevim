@@ -295,7 +295,8 @@ variables = {'ropevim_enable_autoimport': 1,
              'ropevim_confirm_saving': 0,
              'ropevim_local_prefix': '"<C-c>r"',
              'ropevim_global_prefix': '"<C-x>p"',
-             'ropevim_vim_completion': 0}
+             'ropevim_vim_completion': 0,
+             'ropevim_guess_project': 0}
 
 shortcuts = {'code_assist': '<M-/>',
              'lucky_assist': '<M-?>',
