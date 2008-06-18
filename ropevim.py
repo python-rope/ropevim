@@ -70,11 +70,11 @@ class VimUtils(ropemode.environment.Environment):
 
     def get(self, name):
         vimname = 'g:ropevim_%s' % name
-        if vim.eval('exists("%s")' % vimname) in (0, '0'):
+        if str(vim.eval('exists("%s")' % vimname)) == '0':
             return
         result = vim.eval(vimname)
         if result.isdigit():
-            return result == '1'
+            return int(result)
         return result
 
     def get_offset(self):
