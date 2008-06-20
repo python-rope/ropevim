@@ -68,10 +68,10 @@ class VimUtils(ropemode.environment.Environment):
     def y_or_n(self, prompt):
         return self.yes_or_no(prompt)
 
-    def get(self, name):
+    def get(self, name, default=None):
         vimname = 'g:ropevim_%s' % name
         if str(vim.eval('exists("%s")' % vimname)) == '0':
-            return
+            return default
         result = vim.eval(vimname)
         if result.isdigit():
             return int(result)
