@@ -15,6 +15,7 @@ class VimUtils(ropemode.environment.Environment):
             starting = ''
         if default is not None:
             prompt = prompt + ('[%s] ' % default)
+        vim.eval('getchar(0)')
         result = call('input("%s", "%s")' % (prompt, starting))
         if default is not None and result == '':
             return default
