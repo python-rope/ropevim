@@ -15,7 +15,6 @@ class VimUtils(ropemode.environment.Environment):
             starting = ''
         if default is not None:
             prompt = prompt + ('[%s] ' % default)
-        vim.eval('getchar(0)')
         result = call('input("%s", "%s")' % (prompt, starting))
         if default is not None and result == '':
             return default
@@ -343,8 +342,9 @@ def _add_menu(env):
             vim.command('amenu <silent> &Ropevim.-SEP%s- :' % index)
         for name in items:
             item = '\ '.join(token.title() for token in name.split('_'))
-            vim.command('amenu <silent> &Ropevim.%s :%s<cr>' %
-                        (item, _vim_name(name)))
+            for command in ['amenu', 'vmenu']:
+                vim.command('%s <silent> &Ropevim.%s :call %s()<cr>' %
+                            (command, item, _vim_name(name)))
 
 
 ropemode.decorators.logger.message = echo
