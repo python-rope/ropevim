@@ -183,7 +183,7 @@ class VimUtils(ropemode.environment.Environment):
             self._writedefs(locations, filename)
             vim.command('let old_errorfile = &errorfile')
             vim.command('let old_errorformat = &errorformat')
-            vim.command('set errorformat=\%f:\%l:\ \%m')
+            vim.command('set errorformat=%f:%l:\ %m')
             vim.command('cfile ' + filename)
             vim.command('let &errorformat = old_errorformat')
             vim.command('let &errorfile = old_errorfile')
@@ -194,8 +194,8 @@ class VimUtils(ropemode.environment.Environment):
         tofile = open(filename, 'w')
         try:
             for location in locations:
-                err = '%s:%d %s\n' % (location.filename,
-                                      location.lineno, location.note)
+                err = '%s:%d: - %s\n' % (location.filename,
+                                         location.lineno, location.note)
                 echo(err)
                 tofile.write(err)
         finally:
