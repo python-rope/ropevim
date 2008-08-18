@@ -227,7 +227,7 @@ class VimUtils(ropemode.environment.Environment):
 
     def _add_command(self, name, callback, key, prefix, prekey):
         self._add_function(name, callback, prefix)
-        vim.command('command! %s call %s()' %
+        vim.command('command! -range %s call %s()' %
                     (_vim_name(name), _vim_name(name)))
         if key is not None:
             key = prekey + key.replace(' ', '')
