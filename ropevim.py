@@ -82,7 +82,7 @@ class VimUtils(ropemode.environment.Environment):
         return result
 
     def _position_to_offset(self, lineno, colno):
-        result = colno
+        result = min(colno, len(self.buffer[lineno -1]) + 1)
         for line in self.buffer[:lineno-1]:
             result += len(line) + 1
         return result
