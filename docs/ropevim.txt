@@ -51,13 +51,13 @@ included in released packages.
 
 Ropevim:
 
-* repo url: http://rope.sf.net/hg/ropevim
-* snapshot: http://rope.sf.net/hg/ropevim/archive/tip.tar.gz
+* repo url: http://bitbucket.org/agr/ropevim
+* snapshot: http://bitbucket.org/agr/ropevim/get/tip.gz
 
 Ropemode:
 
-* repo url: http://rope.sf.net/hg/ropemode
-* snapshot: http://rope.sf.net/hg/ropemode/archive/tip.tar.gz
+* repo url: http://bitbucket.org/agr/ropemode
+* snapshot: http://bitbucket.org/agr/ropemode/get/tip.gz
 
 
 Feedback
