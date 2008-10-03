@@ -12,6 +12,8 @@ library before using ropevim.
 New Features
 ============
 
+- fixed quickfix error format
+- ropevim_guess_project variable
 
 Setting Up
 ==========
