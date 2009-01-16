@@ -77,6 +77,9 @@ Add::
 
 to your ``~/.vimrc`` file.
 
+Note that when this variable is set, autoimport completions no longer
+work since they need to insert an import to the top of the module, too.
+
 
 Enabling Autoimport
 -------------------
