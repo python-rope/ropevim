@@ -73,7 +73,7 @@ class VimUtils(ropemode.environment.Environment):
         if str(vim.eval('exists("%s")' % vimname)) == '0':
             return default
         result = vim.eval(vimname)
-        if result.isdigit():
+        if isinstance(result, str) and result.isdigit():
             return int(result)
         return result
 
