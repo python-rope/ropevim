@@ -166,7 +166,7 @@ class VimUtils(ropemode.environment.Environment):
         return VimProgress(name)
 
     def current_word(self):
-        pass
+        return vim.eval('expand("<cword>")')
 
     def push_mark(self):
         vim.command('mark `')
