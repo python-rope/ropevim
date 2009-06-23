@@ -78,17 +78,18 @@ class VimUtils(ropemode.environment.Environment):
         return result
 
     def get_offset(self):
-        result = self._position_to_offset(*vim.current.window.cursor)
+        result = self._position_to_offset(*self.cursor)
         return result
 
     def _position_to_offset(self, lineno, colno):
         result = min(colno, len(self.buffer[lineno -1]) + 1)
         for line in self.buffer[:lineno-1]:
+            line = line.decode('utf-8')
             result += len(line) + 1
         return result
 
     def get_text(self):
-        return '\n'.join(self.buffer) + '\n'
+        return u'\n'.join(self.buffer).decode('utf-8') + u'\n'
 
     def get_region(self):
         start = self._position_to_offset(*self.buffer.mark('<'))
@@ -99,6 +100,21 @@ class VimUtils(ropemode.environment.Environment):
     def buffer(self):
         return vim.current.buffer
 
+    def _get_cursor(self):
+        lineno, col = vim.current.window.cursor
+        line = vim.current.line[:col].decode('utf-8')
+        col = len(line)
+        return (lineno, col)
+
+    def _set_cursor(self, cursor):
+        lineno, col = cursor
+        line = vim.current.line.decode('utf-8')
+        line = line[:col].encode('utf-8')
+        col = len(line)
+        vim.current.window.cursor = (lineno, col)
+
+    cursor = property(_get_cursor, _set_cursor)
+
     def filename(self):
         return self.buffer.name
 
@@ -106,27 +122,27 @@ class VimUtils(ropemode.environment.Environment):
         return vim.eval('&modified')
 
     def goto_line(self, lineno):
-        vim.current.window.cursor = (lineno, 0)
+        self.cursor = (lineno, 0)
 
     def insert_line(self, line, lineno):
         self.buffer[lineno - 1:lineno - 1] = [line]
 
     def insert(self, text):
-        lineno, colno = vim.current.window.cursor
+        lineno, colno = self.cursor
         line = self.buffer[lineno - 1]
         self.buffer[lineno - 1] = line[:colno] + text + line[colno:]
-        vim.current.window.cursor = (lineno, colno + len(text))
+        self.cursor = (lineno, colno + len(text))
 
     def delete(self, start, end):
         lineno1, colno1 = self._offset_to_position(start - 1)
         lineno2, colno2 = self._offset_to_position(end - 1)
-        lineno, colno = vim.current.window.cursor
+        lineno, colno = self.cursor
         if lineno1 == lineno2:
             line = self.buffer[lineno1 - 1]
             self.buffer[lineno1 - 1] = line[:colno1] + line[colno2:]
             if lineno == lineno1 and colno >= colno1:
                 diff = colno2 - colno1
-                vim.current.window.cursor = (lineno, max(0, colno - diff))
+                self.cursor = (lineno, max(0, colno - diff))
 
     def _offset_to_position(self, offset):
         text = self.get_text()
