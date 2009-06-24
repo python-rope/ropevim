@@ -81,15 +81,22 @@ class VimUtils(ropemode.environment.Environment):
         result = self._position_to_offset(*self.cursor)
         return result
 
+    def _get_encoding(self):
+        return vim.eval('&encoding')
+    def _encode_line(self, line):
+        return line.encode(self._get_encoding())
+    def _decode_line(self, line):
+        return line.decode(self._get_encoding())
+
     def _position_to_offset(self, lineno, colno):
         result = min(colno, len(self.buffer[lineno -1]) + 1)
         for line in self.buffer[:lineno-1]:
-            line = line.decode('utf-8')
+            line = self._decode_line(line)
             result += len(line) + 1
         return result
 
     def get_text(self):
-        return u'\n'.join(self.buffer).decode('utf-8') + u'\n'
+        return self._decode_line('\n'.join(self.buffer)) + u'\n'
 
     def get_region(self):
         start = self._position_to_offset(*self.buffer.mark('<'))
@@ -102,14 +109,14 @@ class VimUtils(ropemode.environment.Environment):
 
     def _get_cursor(self):
         lineno, col = vim.current.window.cursor
-        line = vim.current.line[:col].decode('utf-8')
+        line = self._decode_line(vim.current.line[:col])
         col = len(line)
         return (lineno, col)
 
     def _set_cursor(self, cursor):
         lineno, col = cursor
-        line = vim.current.line.decode('utf-8')
-        line = line[:col].encode('utf-8')
+        line = self._decode_line(vim.current.line)
+        line = self._encode_line(line[:col])
         col = len(line)
         vim.current.window.cursor = (lineno, col)
 
