@@ -1,10 +1,12 @@
 """ropevim, a vim mode for using rope refactoring library"""
 import os
 import tempfile
+import re
 
 import ropemode.decorators
 import ropemode.environment
 import ropemode.interface
+
 import vim
 
 
@@ -262,6 +264,68 @@ class VimUtils(ropemode.environment.Environment):
         vim.command('function! %s()\n' % _vim_name(name) +
                     'python ropevim.%s(%s)\n' % (name, arg) +
                     'endfunction\n')
+
+    _docstring_re = re.compile('^[\s\t\n]*([^\n]*)')
+
+    def _completion_data(self, proposal):
+        if not self.get('extended_complete', False):
+            return super(VimUtils, self)._completion_data(proposal)
+
+        # we are using extended complete and return dicts instead of strings.
+        # `ci` means "completion item". see `:help complete-items`
+        ci = {'word': proposal.name}
+
+        kind = proposal.kind[0].upper()
+        type_ = proposal.type
+        info = None
+
+        if proposal.kind == 'parameter_keyword':
+            kind = ' '
+            type_ = 'param'
+            if not hasattr(proposal, 'get_default'):
+                # old version of rope
+                pass
+            else:
+                default = proposal.get_default()
+                if default is None:
+                    info = '*'
+                else:
+                    info = '= %s' % default
+
+        elif proposal.kind == 'keyword':
+            kind = ' '
+            type_ = 'keywd'
+
+        elif proposal.kind == 'attribute':
+            kind = ' '
+            if proposal.type == 'function':
+                type_ = 'meth'
+            elif proposal.type == 'variable':
+                type_ = 'prop'
+
+        elif proposal.type == 'function':
+            type_ = 'func'
+
+        elif proposal.type == 'variable':
+            type_ = 'var'
+
+        elif proposal.type == 'exception':
+            type_ = 'exc'
+
+        if info is None:
+            obj_doc = proposal.get_doc()
+            if obj_doc:
+                info = self._docstring_re.match(obj_doc).group(1)
+            else:
+                info = ''
+
+        type_ = type_.ljust(5)[:5]
+        ci['menu'] = ' '.join((kind, type_, info))
+        ret =  u'{%s}' % \
+               u','.join(u'"%s":"%s"' % \
+                         (key, value.replace('"', '\\"')) \
+                         for (key, value) in ci.iteritems())
+        return ret
 
 
 def _vim_name(name):
