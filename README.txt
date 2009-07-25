@@ -80,6 +80,23 @@ to your ``~/.vimrc`` file.
 Note that when this variable is set, autoimport completions no longer
 work since they need to insert an import to the top of the module, too.
 
+By default autocomplete feature will use plain list of proposed completion
+items. You can enable showing extended information about completion
+proposals by setting ::
+
+  let ropevim_extended_complete=1
+
+Completion menu list will show the proposed name itself, one letter which
+shows where this proposal came from (it can be "L" for locals, "G" for
+globals, "B" for builtins, or empty string if such scope definition is not
+applicable), a short object type description (such as "func", "param",
+"meth" and so forth) and a first line of proposed object's docstring (if it
+has one). For function's keyword parameters the last field shows "*" symbol
+if this param is required or "= <default value>" if it is not.
+
+Note that you'll need rope r1558:0d76aa9d0614 or later and ropemode
+r35:bd77ca42b04d or later for extended complete feature to work.
+
 
 Enabling Autoimport
 -------------------
