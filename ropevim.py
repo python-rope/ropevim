@@ -56,7 +56,11 @@ class VimUtils(ropemode.environment.Environment):
             col = int(call('col(".")'))
             if starting:
                 col -= len(starting)
-            vim.command('call complete(%s, %s)' % (col, values))
+            if self.get('extended_complete'):
+                values = u'[%s]' % u','.join(values)
+            command = u'call complete(%s, %s)' % (col, values)
+            command = command.encode(self._get_encoding())
+            vim.command(command)
             return None
         return self.ask_values(prompt, values, starting=starting,
                                show_values=False)
