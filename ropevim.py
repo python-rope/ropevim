@@ -53,14 +53,18 @@ class VimUtils(ropemode.environment.Environment):
 
     def ask_completion(self, prompt, values, starting=None):
         if self.get('vim_completion') and 'i' in call('mode()'):
+            if not self.get('extended_complete', False):
+                proposals = u','.join(u"'%s'" % self._completion_text(proposal)
+                                      for proposal in values)
+            else:
+                proposals = u','.join(self._extended_completion(proposal)
+                                      for proposal in values)
+
             col = int(call('col(".")'))
             if starting:
                 col -= len(starting)
-            if self.get('extended_complete'):
-                values = u'[%s]' % u','.join(values)
-            command = u'call complete(%s, %s)' % (col, values)
-            command = command.encode(self._get_encoding())
-            vim.command(command)
+            command = u'call complete(%s, [%s])' % (col, proposals)
+            vim.command(command.encode(self._get_encoding()))
             return None
         return self.ask_values(prompt, values, starting=starting,
                                show_values=False)
@@ -269,22 +273,21 @@ class VimUtils(ropemode.environment.Environment):
                     'python ropevim.%s(%s)\n' % (name, arg) +
                     'endfunction\n')
 
-    _docstring_re = re.compile('^[\s\t\n]*([^\n]*)')
-
     def _completion_data(self, proposal):
-        if not self.get('extended_complete', False):
-            return super(VimUtils, self)._completion_data(proposal)
+        return proposal
 
+    _docstring_re = re.compile('^[\s\t\n]*([^\n]*)')
+    def _extended_completion(self, proposal):
         # we are using extended complete and return dicts instead of strings.
         # `ci` means "completion item". see `:help complete-items`
         ci = {'word': proposal.name}
 
-        kind = proposal.kind[0].upper()
+        scope = proposal.scope[0].upper()
         type_ = proposal.type
         info = None
 
-        if proposal.kind == 'parameter_keyword':
-            kind = ' '
+        if proposal.scope == 'parameter_keyword':
+            scope = ' '
             type_ = 'param'
             if not hasattr(proposal, 'get_default'):
                 # old version of rope
@@ -296,25 +299,25 @@ class VimUtils(ropemode.environment.Environment):
                 else:
                     info = '= %s' % default
 
-        elif proposal.kind == 'keyword':
-            kind = ' '
+        elif proposal.scope == 'keyword':
+            scope = ' '
             type_ = 'keywd'
 
-        elif proposal.kind == 'attribute':
-            kind = ' '
+        elif proposal.scope == 'attribute':
+            scope = 'M'
             if proposal.type == 'function':
                 type_ = 'meth'
-            elif proposal.type == 'variable':
+            elif proposal.type == 'instance':
                 type_ = 'prop'
 
         elif proposal.type == 'function':
             type_ = 'func'
 
-        elif proposal.type == 'variable':
-            type_ = 'var'
+        elif proposal.type == 'instance':
+            type_ = 'inst'
 
-        elif proposal.type == 'exception':
-            type_ = 'exc'
+        elif proposal.type == 'module':
+            type_ = 'mod'
 
         if info is None:
             obj_doc = proposal.get_doc()
@@ -323,8 +326,11 @@ class VimUtils(ropemode.environment.Environment):
             else:
                 info = ''
 
-        type_ = type_.ljust(5)[:5]
-        ci['menu'] = ' '.join((kind, type_, info))
+        if type_ is None:
+            type_ = ' '
+        else:
+            type_ = type_.ljust(5)[:5]
+        ci['menu'] = ' '.join((scope, type_, info))
         ret =  u'{%s}' % \
                u','.join(u'"%s":"%s"' % \
                          (key, value.replace('"', '\\"')) \
@@ -377,7 +383,8 @@ class _ValueCompleter(object):
                     'endfunction\n')
 
     def __call__(self, arg_lead, cmd_line, cursor_pos):
-        result = [value for value in self.values if value.startswith(arg_lead)]
+        result = [proposal.name for proposal in self.values \
+                  if proposal.name.startswith(arg_lead)]
         vim.command('let s:completions = %s' % result)
 
 
