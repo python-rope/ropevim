@@ -12,6 +12,10 @@ library before using ropevim.
 New Features
 ============
 
+* improved support of multibyte sources
+* implemented `extended complete` feature (disabled by default)
+* ropemode is not the part of distribution now
+
 
 Setting Up
 ==========
