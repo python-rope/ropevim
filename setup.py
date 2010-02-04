@@ -1,4 +1,10 @@
-from distutils.core import setup
+extra_kwargs = {}
+try:
+    from setuptools import setup
+    extra_kwargs['install_requires'] = ['rope >= 0.9.3', 'ropemode']
+    extra_kwargs['zip_safe'] = False
+except ImportError:
+    from distutils.core import setup
 
 
 classifiers=[
@@ -20,13 +26,16 @@ def get_long_description():
     return '\n' + '\n'.join(lines[:end]) + '\n'
 
 setup(name='ropevim',
-      version='0.3',
+      version='0.3-rc',
       description='A vim plugin for using rope python refactoring library',
       long_description=get_long_description(),
-      packages=['ropemode'],
       py_modules=['ropevim'],
       author='Ali Gholami Rudi',
       author_email='aligrudi@users.sourceforge.net',
       url='http://rope.sf.net/ropevim.html',
       license='GNU GPL',
-      classifiers=classifiers)
+      classifiers=classifiers,
+      requires=['ropemode'],
+      data_files=[('.', ['ropevim.vim'])],
+      **extra_kwargs
+)
