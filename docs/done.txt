@@ -2,6 +2,12 @@
  Done
 ======
 
+> Public Release 0.3 : Febrary 5, 2010
+
+* ropemode is not the part of distribution : Febrary 5, 2010
+* implemented `extended complete` feature : January 26, 2010
+* improved support of multibyte sources : June 24, 2009
+
 > Public Release 0.2 : October 3, 2008
 
 * fixed quickfix error format : August 18, 2008
