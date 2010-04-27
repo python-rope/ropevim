@@ -244,6 +244,10 @@ Variables
 * ``ropevim_autoimport_underlineds``: If set, autoimport will cache
   names starting with underlines, too.
 
+* ``ropevim_goto_def_newwin``: If set, ropevim will open a new buffer
+  for "go to definition" result if the definition found is located
+  in another file. By default the file is open in the same buffer.
+
 
 Keybinding
 ==========
