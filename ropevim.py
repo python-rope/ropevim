@@ -385,9 +385,15 @@ class _ValueCompleter(object):
                     'endfunction\n')
 
     def __call__(self, arg_lead, cmd_line, cursor_pos):
-        result = [proposal.name for proposal in self.values \
-                  if proposal.name.startswith(arg_lead)]
-        vim.command('let s:completions = %s' % result)
+        # don't know if self.values can be empty but better safe then sorry
+        if self.values:
+            if not isinstance(self.values[0], basestring):
+                result = [proposal.name for proposal in self.values \
+                          if proposal.name.startswith(arg_lead)]
+            else:
+                result = [proposal for proposal in self.values \
+                          if proposal.startswith(arg_lead)]
+            vim.command('let s:completions = %s' % result)
 
 
 variables = {'ropevim_enable_autoimport': 1,
