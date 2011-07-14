@@ -21,7 +21,7 @@ classifiers=[
     'Topic :: Software Development']
 
 def get_long_description():
-    lines = open('README.txt').read().splitlines(False)
+    lines = open('README.rst').read().splitlines(False)
     end = lines.index('Setting Up')
     return '\n' + '\n'.join(lines[:end]) + '\n'
 
