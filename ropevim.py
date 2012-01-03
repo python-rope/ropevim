@@ -416,6 +416,36 @@ shortcuts = {'code_assist': '<M-/>',
 insert_shortcuts = {'code_assist': '<M-/>',
                     'lucky_assist': '<M-?>'}
 
+menu_structure = (
+    'open_project',
+    'close_project',
+    'find_file',
+    'undo',
+    'redo',
+    None, # separator
+    'rename',
+    'extract_variable',
+    'extract_method',
+    'inline',
+    'move',
+    'restructure',
+    'use_function',
+    'introduce_factory',
+    'change_signature',
+    'rename_current_module',
+    'move_current_module',
+    'module_to_package',
+    None, # separator
+    'code_assist',
+    'goto_definition',
+    'show_doc',
+    'find_occurrences',
+    'lucky_assist',
+    'jump_to_global',
+    'show_calltip',
+)
+
+
 def _init_variables():
     for variable, default in variables.items():
         vim.command('if !exists("g:%s")\n' % variable +
@@ -434,23 +464,21 @@ def _enable_shortcuts(env):
                         'endfunc')
             vim.command('imap %s <C-R>=%s()<cr>' % (shortcut, command_name))
 
-def _add_menu(env):
-    project = ['open_project', 'close_project', 'find_file', 'undo', 'redo']
-    refactor = ['rename', 'extract_variable', 'extract_method', 'inline',
-                'move', 'restructure', 'use_function', 'introduce_factory',
-                'change_signature', 'rename_current_module',
-                'move_current_module', 'module_to_package']
-    assists = ['code_assist', 'goto_definition', 'show_doc', 'find_occurrences',
-               'lucky_assist', 'jump_to_global', 'show_calltip']
-    vim.command('silent! aunmenu Ropevim')
-    for index, items in enumerate([project, assists, refactor]):
-        if index != 0:
-            vim.command('amenu <silent> &Ropevim.-SEP%s- :' % index)
-        for name in items:
-            item = '\ '.join(token.title() for token in name.split('_'))
-            for command in ['amenu', 'vmenu']:
-                vim.command('%s <silent> &Ropevim.%s :call %s()<cr>' %
-                            (command, item, _vim_name(name)))
+def _add_menu(env, root_node='&Ropevim'):
+    cmd_tmpl = '%s <silent> %s.%s :call %s()<cr>'
+
+    vim.command('silent! aunmenu %s' % root_node)
+
+    for i, cb in enumerate(menu_structure):
+        if cb is None:
+            vim.command('amenu <silent> %s.-SEP%s- :' % (root_node, i))
+            continue
+
+        # use_function -> Use\ Function
+        name = cb.replace('_', '\ ').title()
+
+        for cmd in ('amenu', 'vmenu'):
+            vim.command(cmd_tmpl % (cmd, root_node, name, _vim_name(cb)))
 
 
 ropemode.decorators.logger.message = echo
@@ -462,4 +490,6 @@ _env = VimUtils()
 _interface = ropemode.interface.RopeMode(env=_env)
 _interface.init()
 _enable_shortcuts(_env)
+
 _add_menu(_env)
+_add_menu(_env, 'PopUp.&Ropevim') # menu weight can also be added
