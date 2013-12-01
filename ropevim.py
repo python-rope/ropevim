@@ -1,6 +1,9 @@
 """ropevim, a vim mode for using rope refactoring library"""
+from __future__ import print_function
+
 import os
 import re
+import sys
 import tempfile
 
 import ropemode.decorators
@@ -8,6 +11,12 @@ import ropemode.environment
 import ropemode.interface
 
 import vim
+
+
+if sys.version_info[0] == 3:
+    python_cmd = 'python3'
+else:
+    python_cmd = 'python'
 
 
 class VimUtils(ropemode.environment.Environment):
@@ -288,7 +297,7 @@ class VimUtils(ropemode.environment.Environment):
         globals()[name] = callback
         arg = 'None' if prefix else ''
         vim.command('function! %s() range\n' % _vim_name(name) +
-                    'python ropevim.%s(%s)\n' % (name, arg) +
+                    '%s ropevim.%s(%s)\n' % (python_cmd, name, arg) +
                     'endfunction\n')
 
     def _completion_data(self, proposal):
@@ -388,6 +397,7 @@ def echo(message):
         message = message.encode(vim.eval('&encoding'))
     vim.command('echo "{}"'.format(message))
 
+
 def call(command):
     return vim.eval(command)
 
@@ -396,12 +406,12 @@ class _ValueCompleter(object):
 
     def __init__(self):
         self.values = []
-        vim.command('python import vim')
+        vim.command('%s import vim' % python_cmd)
         vim.command('function! RopeValueCompleter(A, L, P)\n'
-                    'python args = [vim.eval("a:" + p) for p in "ALP"]\n'
-                    'python ropevim._completer(*args)\n'
+                    '%s args = [vim.eval("a:" + p) for p in "ALP"]\n'
+                    '%s ropevim._completer(*args)\n'
                     'return s:completions\n'
-                    'endfunction\n')
+                    'endfunction\n' % (python_cmd, python_cmd))
 
     def __call__(self, arg_lead, cmd_line, cursor_pos):
         # don't know if self.values can be empty but better safe then sorry
@@ -471,6 +481,7 @@ def _init_variables():
         vim.command('if !exists("g:%s")\n' % variable +
                     '  let g:%s = %s\n' % (variable, default))
 
+
 def _enable_shortcuts(env):
     if env.get('enable_shortcuts'):
         for command, shortcut in shortcuts.items():
@@ -483,6 +494,7 @@ def _enable_shortcuts(env):
                         'return ""\n'
                         'endfunc')
             vim.command('imap %s <C-R>=%s()<cr>' % (shortcut, command_name))
+
 
 def _add_menu(env, root_node='&Ropevim'):
     cmd_tmpl = '%s <silent> %s.%s :call %s()<cr>'
