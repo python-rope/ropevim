@@ -261,6 +261,8 @@ Variables
   for "go to definition" result if the definition found is located
   in another file. By default the file is open in the same buffer.
 
+* ``g:ropevim_open_files_in_tabs``: If non-zero, ropevim will open files
+  in tabs. This is disabled by default.
 
 Keybinding
 ==========

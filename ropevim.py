@@ -187,11 +187,19 @@ class VimUtils(ropemode.environment.Environment):
         if initial:
             self.find_file(initial)
 
+    def _open_file(self, filename, new=False):
+        open_in_tab = vim.eval('g:ropevim_open_files_in_tabs')
+        if open_in_tab == '1':
+            vim.command('tab drop %s' % filename)
+            return
+
+        if new:
+            vim.command('new')
+        vim.command('e %s' % filename)
+
     def find_file(self, filename, readonly=False, other=False, force=False):
         if filename != self.filename() or force:
-            if other:
-                vim.command('new')
-            vim.command('e %s' % filename)
+            self._open_file(filename, new=other)
             if readonly:
                 vim.command('set nomodifiable')
 
@@ -402,6 +410,7 @@ variables = {'ropevim_enable_autoimport': 1,
              'ropevim_autoimport_underlineds': 0,
              'ropevim_codeassist_maxfixes' : 1,
              'ropevim_enable_shortcuts' : 1,
+             'ropevim_open_files_in_tabs' : 0,
              'ropevim_autoimport_modules': '[]',
              'ropevim_confirm_saving': 0,
              'ropevim_local_prefix': '"<C-c>r"',
