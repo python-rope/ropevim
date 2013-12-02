@@ -321,6 +321,15 @@ C-c f             RopeFindOccurrences
 ================  ============================
 
 
+Support for Omni completion
+---------------------------
+
+You can enable using Rope as providing for Omni completion by setting
+omnifunc variable to ``RopeCompleteFunc``. E.g., by putting something
+like this in your ``~/.vimrc``::
+    autocmd FileType python setlocal omnifunc=RopeCompleteFunc
+
+
 Contributing
 ============
 

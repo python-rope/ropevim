@@ -1,17 +1,7 @@
-" An omni-completer for python using rope and ropevim. Designed to work
-" nicely with supertab.
-"
-" This code uses a lot of internal functions, etc. from rope and ropemode so
-" it is likely to break. You have been warned.
-"
-" Created by Ryan Wooden (rygwdn@gmail.com)
+import vim
+import ropevim
+import ropemode.interface
 
-if !has("python")
-    finish
-endif
-
-python << EOF
-import ropevim, ropemode.interface
 
 class RopeOmniCompleter(object):
     """ The class used to complete python code. """
@@ -47,7 +37,7 @@ class RopeOmniCompleter(object):
 
         try:
             proposals = self.assist._calculate_proposals()
-        except Exception: # a bunch of rope stuff
+        except Exception:  # a bunch of rope stuff
             return []
 
         ps = [self._get_dict(p) for p in proposals]
@@ -64,15 +54,3 @@ class RopeOmniCompleter(object):
 
         except Exception:
             return -1
-
-EOF
-
-function! RopeCompleteFunc(findstart, base)
-    " A completefunc for python code using rope
-    if (a:findstart)
-        py ropecompleter = RopeOmniCompleter(vim.eval("a:base"))
-        py vim.command("return %s" % ropecompleter.start)
-    else
-        py vim.command("return %s" % ropecompleter.complete(vim.eval("a:base")))
-    endif
-endfunction
