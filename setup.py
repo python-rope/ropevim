@@ -7,7 +7,7 @@ except ImportError:
     from distutils.core import setup
 
 
-classifiers=[
+classifiers = [
     'Development Status :: 4 - Beta',
     'Operating System :: OS Independent',
     'Environment :: X11 Applications',
@@ -20,16 +20,17 @@ classifiers=[
     'Programming Language :: Python',
     'Topic :: Software Development']
 
+
 def get_long_description():
     lines = open('README.rst').read().splitlines(False)
     end = lines.index('Setting Up')
     return '\n' + '\n'.join(lines[:end]) + '\n'
 
 setup(name='ropevim',
-      version='0.3-rc',
+      version='0.3-rc.1.omni',
       description='A vim plugin for using rope python refactoring library',
       long_description=get_long_description(),
-      py_modules=['ropevim'],
+      py_modules=['ropevim', 'rope_omni'],
       author='Ali Gholami Rudi',
       author_email='aligrudi@users.sourceforge.net',
       url='http://rope.sf.net/ropevim.html',
@@ -38,4 +39,4 @@ setup(name='ropevim',
       requires=['ropemode'],
       data_files=[('share/vim/plugin', ['ropevim.vim'])],
       **extra_kwargs
-)
+      )
