@@ -227,8 +227,10 @@ class VimUtils(ropemode.environment.Environment):
         tofile = open(filename, 'w')
         try:
             for location in locations:
-                err = '%s:%d: - %s\n' % (location.filename,
-                                         location.lineno, location.note)
+                lineno = location.lineno
+                err = '%s:%d: %s %s\n' % (
+                    os.path.relpath(location.filename), location.lineno,
+                    location.note, location.line_content)
                 echo(err)
                 tofile.write(err)
         finally:
