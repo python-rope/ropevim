@@ -29,17 +29,21 @@ Setting Up
 First add ropevim folder to the ``PYTHONPATH`` (or install it using
 ``python setup.py install``).
 
-Then load ``ropevim.vim`` in vim.  That can be done either by adding
-``source path/to/ropevim.vim`` to your ``~/.vimrc`` or copying it to
-``~/.vim/plugin/`` folder.
+Then load ``ropevim.vim`` in vim.  
 
-If you don't want to install rope and ropevim you can add something
-like this to your ``~/.vimrc``::
+If you don't have a preferred installation method, I recommend
+installing pathogen.vim, and then simply copy and paste:
 
-  let $PYTHONPATH .= ":/path/to/rope:/path/to/ropevim"
-  source /path/to/ropevim.vim
+    cd ~/.vim/bundle
+    git clone https://github.com/python-rope/ropevim.git
+    (or even add this repo as a submodule to `~/.vim/bundle` git repo if
+    you have setup `~/.vim/bundle` in this way and you should)
 
-For using the repository version of rope, see ``docs/ropevim.txt``.
+Once help tags have been generated, you can view the manual with `:help
+fugitive.`
+
+For using the repository version of rope, see ``docs/ropevim.txt`` (or
+vim command `:he ropevim`)
 
 
 Getting Started
@@ -245,7 +249,7 @@ Variables
 
 * ``ropevim_enable_autoimport``: Shows whether to enable autoimport.
 * ``ropevim_autoimport_modules``: The name of modules whose global
-  names should be cached.  `RopeGenerateAutoimportCache' reads this
+  names should be cached.  `RopeGenerateAutoimportCache` reads this
   list and fills its cache.
 * ``ropevim_autoimport_underlineds``: If set, autoimport will cache
   names starting with underlines, too.
@@ -262,59 +266,93 @@ Uses almost the same keybinding as ropemacs.  Note that global
 commands have a ``C-x p`` prefix and local commands have a ``C-c r``
 prefix.  You can change that (see variables_ section).
 
-================  ============================
-Key               Command
-================  ============================
-C-x p o           RopeOpenProject
-C-x p k           RopeCloseProject
-C-x p f           RopeFindFile
-C-x p 4 f         RopeFindFileOtherWindow
-C-x p u           RopeUndo
-C-x p r           RopeRedo
-C-x p c           RopeProjectConfig
-C-x p n [mpfd]    RopeCreate(Module|Package|File|Directory)
-                  RopeWriteProject
++-----------------+-------------------------------------------------------+
+|Key              | Command                                               |
++=================+=======================================================+
+|C-x p o          | RopeOpenProject                                       |
++-----------------+-------------------------------------------------------+
+|C-x p k          | RopeCloseProject                                      |
++-----------------+-------------------------------------------------------+
+|C-x p f          | RopeFindFile                                          |
++-----------------+-------------------------------------------------------+
+|C-x p 4 f        | RopeFindFileOtherWindow                               |
++-----------------+-------------------------------------------------------+
+|C-x p u          | RopeUndo                                              |
++-----------------+-------------------------------------------------------+
+|C-x p r          | RopeRedo                                              |
++-----------------+-------------------------------------------------------+
+|C-x p c          | RopeProjectConfig                                     |
++-----------------+-------------------------------------------------------+
+|C-x p n [mpfd]   | RopeCreate(Module|Package|File|Directory)             |
++-----------------+-------------------------------------------------------+
+|                 | RopeWriteProject                                      |
++-----------------+-------------------------------------------------------+
+|                 |                                                       |
++-----------------+-------------------------------------------------------+
+|C-c r r          | RopeRename                                            |
++-----------------+-------------------------------------------------------+
+|C-c r l          | RopeExtractVariable                                   |
++-----------------+-------------------------------------------------------+
+|C-c r m          | RopeExtractMethod                                     |
++-----------------+-------------------------------------------------------+
+|C-c r i          | RopeInline                                            |
++-----------------+-------------------------------------------------------+
+|C-c r v          | RopeMove                                              |
++-----------------+-------------------------------------------------------+
+|C-c r x          | RopeRestructure                                       |
++-----------------+-------------------------------------------------------+
+|C-c r u          | RopeUseFunction                                       |
++-----------------+-------------------------------------------------------+
+|C-c r f          | RopeIntroduceFactory                                  |
++-----------------+-------------------------------------------------------+
+|C-c r s          | RopeChangeSignature                                   |
++-----------------+-------------------------------------------------------+
+|C-c r 1 r        | RopeRenameCurrentModule                               |
++-----------------+-------------------------------------------------------+
+|C-c r 1 v        | RopeMoveCurrentModule                                 |
++-----------------+-------------------------------------------------------+
+|C-c r 1 p        | RopeModuleToPackage                                   |
++-----------------+-------------------------------------------------------+
+|                 |                                                       |
++-----------------+-------------------------------------------------------+
+|C-c r o          | RopeOrganizeImports                                   |
++-----------------+-------------------------------------------------------+
+|C-c r n [vfcmp]  | RopeGenerate(Variable|Function|Class|Module|Package)  |
++-----------------+-------------------------------------------------------+
+|                 |                                                       |
++-----------------+-------------------------------------------------------+
+|C-c r a /        | RopeCodeAssist                                        |
++-----------------+-------------------------------------------------------+
+|C-c r a g        | RopeGotoDefinition                                    |
++-----------------+-------------------------------------------------------+
+|C-c r a d        | RopeShowDoc                                           |
++-----------------+-------------------------------------------------------+
+|C-c r a f        | RopeFindOccurrences                                   |
++-----------------+-------------------------------------------------------+
+|C-c r a ?        | RopeLuckyAssist                                       |
++-----------------+-------------------------------------------------------+
+|C-c r a j        | RopeJumpToGlobal                                      |
++-----------------+-------------------------------------------------------+
+|C-c r a c        | RopeShowCalltip                                       |
++-----------------+-------------------------------------------------------+
+|                 | RopeAnalyzeModule                                     |
++-----------------+-------------------------------------------------------+
+|                 | RopeAutoImport                                        |
++-----------------+-------------------------------------------------------+
+|                 | RopeGenerateAutoimportCache                           |
++-----------------+-------------------------------------------------------+
 
-C-c r r           RopeRename
-C-c r l           RopeExtractVariable
-C-c r m           RopeExtractMethod
-C-c r i           RopeInline
-C-c r v           RopeMove
-C-c r x           RopeRestructure
-C-c r u           RopeUseFunction
-C-c r f           RopeIntroduceFactory
-C-c r s           RopeChangeSignature
-C-c r 1 r         RopeRenameCurrentModule
-C-c r 1 v         RopeMoveCurrentModule
-C-c r 1 p         RopeModuleToPackage
-
-C-c r o           RopeOrganizeImports
-C-c r n [vfcmp]   RopeGenerate(Variable|Function|Class|Module|Package)
-
-C-c r a /         RopeCodeAssist
-C-c r a g         RopeGotoDefinition
-C-c r a d         RopeShowDoc
-C-c r a f         RopeFindOccurrences
-C-c r a ?         RopeLuckyAssist
-C-c r a j         RopeJumpToGlobal
-C-c r a c         RopeShowCalltip
-                  RopeAnalyzeModule
-
-                  RopeAutoImport
-                  RopeGenerateAutoimportCache
-===============   ============================
-
-
-Shortcuts
----------
-
-Some commands are used very frequently; specially the commands in
-code-assist group.  You can define your own shortcuts like this::
-
-  :map <C-c>g :call RopeGotoDefinition()
-
-Ropevim itself comes with a few shortcuts.  These shortcuts will be
-used only when ``ropevim_enable_shortcuts`` is set.
+                                                                         
+Shortcuts                                                                
+---------                                                                
+                                                                         
+Some commands are used very frequently; specially the commands in        
+code-assist group.  You can define your own shortcuts like this::        
+                                                                         
+  :map <C-c>g :call RopeGotoDefinition()                                
+                                                                         
+Ropevim itself comes with a few shortcuts.  These shortcuts will be      
+used only when ``ropevim_enable_shortcuts`` is set.                      
 
 ================  ============================
 Key               Command
@@ -333,6 +371,7 @@ Support for Omni completion
 You can enable using Rope as providing for Omni completion by setting
 omnifunc variable to ``RopeCompleteFunc``. E.g., by putting something
 like this in your ``~/.vimrc``::
+
     autocmd FileType python setlocal omnifunc=RopeCompleteFunc
 
 

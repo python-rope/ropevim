@@ -37,6 +37,5 @@ setup(name='ropevim',
       license='GNU GPL',
       classifiers=classifiers,
       requires=['ropemode'],
-      data_files=[('share/vim/plugin', ['ropevim.vim'])],
       **extra_kwargs
       )
