@@ -1,4 +1,4 @@
-*ropevim.txt*  *Ropevim*  Rope in VIM
+*ropevim.rst*  *Ropevim*  Rope in VIM
 
 Note: this documentation is pulled from different project and perhaps we
 haven’t find all issues yet. Please, if you see something wrong, file a ticket

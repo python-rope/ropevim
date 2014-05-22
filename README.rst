@@ -42,7 +42,7 @@ installing pathogen.vim, and then simply copy and paste:
 Once help tags have been generated, you can view the manual with `:help
 fugitive.`
 
-For using the repository version of rope, see ``docs/ropevim.txt`` (or
+For using the repository version of rope, see ``docs/ropevim.rst`` (or
 vim command `:he ropevim`)
 
 

@@ -27,10 +27,12 @@ def get_long_description():
     return '\n' + '\n'.join(lines[:end]) + '\n'
 
 setup(name='ropevim',
-      version='0.3-rc.1.omni',
+      version='0.4.0',
       description='A vim plugin for using rope python refactoring library',
       long_description=get_long_description(),
       py_modules=['ropevim', 'rope_omni'],
+      maintainer='Matej Cepl',
+      maintainer_email='mcepl@cepl.eu',
       author='Ali Gholami Rudi',
       author_email='aligrudi@users.sourceforge.net',
       url='http://rope.sf.net/ropevim.html',
