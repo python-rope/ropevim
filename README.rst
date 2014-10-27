@@ -34,10 +34,13 @@ Then load ``ropevim.vim`` in vim.
 If you don't have a preferred installation method, I recommend
 installing pathogen.vim, and then simply copy and paste:
 
-    cd ~/.vim/bundle
-    git clone https://github.com/python-rope/ropevim.git
-    (or even add this repo as a submodule to `~/.vim/bundle` git repo if
-    you have setup `~/.vim/bundle` in this way and you should)
+.. code:: bash
+
+    $ cd ~/.vim/bundle
+    $ git clone https://github.com/python-rope/ropevim.git
+
+(or even add this repo as a submodule to `~/.vim/bundle` git repo if
+you have setup `~/.vim/bundle` in this way and you should)
 
 Once help tags have been generated, you can view the manual with `:help
 fugitive.`
