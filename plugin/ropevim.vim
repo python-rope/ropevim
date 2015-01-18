@@ -2,9 +2,14 @@ if !has("python")
     finish
 endif
 
+" Add s:script_path referencing ropevim bundle directory
+let s:script_path = fnameescape(expand('<sfile>:p:h:h'))
+
 function! LoadRope()
 python << EOF
 import ropevim
+import sys
+sys.path.insert(0, vim.eval('expand(s:script_path)'))
 from rope_omni import RopeOmniCompleter
 EOF
 endfunction
