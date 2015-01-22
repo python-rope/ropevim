@@ -271,7 +271,7 @@ class VimUtils(ropemode.environment.Environment):
     def _add_function(self, name, callback, prefix=False):
         globals()[name] = callback
         arg = 'None' if prefix else ''
-        vim.command('function! %s()\n' % _vim_name(name) +
+        vim.command('function! %s() range\n' % _vim_name(name) +
                     'python ropevim.%s(%s)\n' % (name, arg) +
                     'endfunction\n')
 
