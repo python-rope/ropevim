@@ -55,8 +55,8 @@ file in the other window.
                                                               *RopeCodeAssist*
                                                              *:RopeCodeAssist*
                                                             *:RopeLuckyAssist*
-                                                    *'pymode_rope_vim_completion'*
-                                                 *'pymode_rope_extended_complete'*
+                                                    *'ropevim_vim_completion'*
+                                                 *'ropevim_extended_complete'*
 
 |:RopeCodeAssist| command (<C-Space>) will let you select from a list
 of completions.  |:RopeLuckyAssist| command (<C-?>) does not ask
@@ -65,7 +65,7 @@ anything; instead, it inserts the first proposal.
 You can tell ropevim to use vim's complete function in insert mode;
 Add: >
 
-  let pymode_rope_vim_completion=1
+  let ropevim_vim_completion=1
 <
 to your '~/.vimrc' file.
 
@@ -78,7 +78,7 @@ By default autocomplete feature will use plain list of proposed completion
 items. You can enable showing extended information about completion
 proposals by setting : >
 
-  let pymode_rope_extended_complete=1
+  let ropevim_extended_complete=1
 <
 Completion menu list will show the proposed name itself, one letter which
 shows where this proposal came from (it can be "L" for locals, "G" for
@@ -100,10 +100,10 @@ modules.  Rope maintains a cache of global names for each project.  It
 updates the cache only when modules are changed; if you want to cache
 all your modules at once, use |:RopeGenerateAutoimportCache|.  It
 will cache all of the modules inside the project plus those whose
-names are listed in |'pymode_rope_autoimport_modules'| list: >
+names are listed in |'ropevim_autoimport_modules'| list: >
 
   " add the name of modules you want to autoimport
-  let g:pymode_rope_autoimport_modules = ["os", "shutil"]
+  let g:ropevim_autoimport_modules = ["os", "shutil"]
 <
 Now if you are in a buffer that contains: >
 
