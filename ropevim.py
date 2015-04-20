@@ -193,7 +193,10 @@ class VimUtils(ropemode.environment.Environment):
             vim.command('tab drop %s' % filename)
             return
 
-        if new:
+        new_win = vim.eval('g:ropevim_goto_def_newwin')
+        if new_win in ('new', 'vnew'):
+            vim.command(new_win)
+        elif new:
             vim.command('new')
         vim.command('e %s' % filename)
 
@@ -416,6 +419,7 @@ variables = {'ropevim_enable_autoimport': 1,
              'ropevim_local_prefix': '"<C-c>r"',
              'ropevim_global_prefix': '"<C-x>p"',
              'ropevim_vim_completion': 0,
+             'ropevim_goto_def_newwin': '',
              'ropevim_guess_project': 0}
 
 shortcuts = {'code_assist': '<M-/>',
