@@ -193,8 +193,8 @@ class VimUtils(ropemode.environment.Environment):
             vim.command('tab drop %s' % filename)
             return
 
-        if new:
-            vim.command('new')
+        if new in ('new', 'vnew'):
+            vim.command(new)
         vim.command('e %s' % filename)
 
     def find_file(self, filename, readonly=False, other=False, force=False):
