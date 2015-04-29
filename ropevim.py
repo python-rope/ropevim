@@ -1,7 +1,7 @@
 """ropevim, a vim mode for using rope refactoring library"""
 import os
-import tempfile
 import re
+import tempfile
 
 import ropemode.decorators
 import ropemode.environment
@@ -93,13 +93,15 @@ class VimUtils(ropemode.environment.Environment):
 
     def _get_encoding(self):
         return vim.eval('&encoding')
+
     def _encode_line(self, line):
         return line.encode(self._get_encoding())
+
     def _decode_line(self, line):
         return line.decode(self._get_encoding())
 
     def _position_to_offset(self, lineno, colno):
-        result = min(colno, len(self.buffer[lineno -1]) + 1)
+        result = min(colno, len(self.buffer[lineno - 1]) + 1)
         for line in self.buffer[:lineno-1]:
             line = self._decode_line(line)
             result += len(line) + 1
@@ -109,9 +111,14 @@ class VimUtils(ropemode.environment.Environment):
         return self._decode_line('\n'.join(self.buffer)) + u'\n'
 
     def get_region(self):
-        start = self._position_to_offset(*self.buffer.mark('<'))
-        end = self._position_to_offset(*self.buffer.mark('>'))
-        return start, end
+        beg_mark = self.buffer.mark('<')
+        end_mark = self.buffer.mark('>')
+        if beg_mark and end_mark:
+            start = self._position_to_offset(*beg_mark)
+            end = self._position_to_offset(*end_mark)
+            return start, end
+        else:
+            return 0, 0
 
     @property
     def buffer(self):
@@ -235,7 +242,7 @@ class VimUtils(ropemode.environment.Environment):
         tofile = open(filename, 'w')
         try:
             for location in locations:
-                lineno = location.lineno
+                # FIXME seems suspicious lineno = location.lineno
                 err = '%s:%d: %s %s\n' % (
                     os.path.relpath(location.filename), location.lineno,
                     location.note, location.line_content)
@@ -287,6 +294,7 @@ class VimUtils(ropemode.environment.Environment):
         return proposal
 
     _docstring_re = re.compile('^[\s\t\n]*([^\n]*)')
+
     def _extended_completion(self, proposal):
         # we are using extended complete and return dicts instead of strings.
         # `ci` means "completion item". see `:help complete-items`
@@ -341,10 +349,10 @@ class VimUtils(ropemode.environment.Environment):
         else:
             type_ = type_.ljust(5)[:5]
         ci['menu'] = ' '.join((scope, type_, info))
-        ret =  u'{%s}' % \
-               u','.join(u'"%s":"%s"' % \
-                         (key, value.replace('"', '\\"')) \
-                         for (key, value) in ci.iteritems())
+        ret = u'{%s}' % \
+              u','.join(u'"%s":"%s"' %
+                        (key, value.replace('"', '\\"'))
+                        for (key, value) in ci.iteritems())
         return ret
 
 
@@ -398,19 +406,19 @@ class _ValueCompleter(object):
         # don't know if self.values can be empty but better safe then sorry
         if self.values:
             if not isinstance(self.values[0], basestring):
-                result = [proposal.name for proposal in self.values \
+                result = [proposal.name for proposal in self.values
                           if proposal.name.startswith(arg_lead)]
             else:
-                result = [proposal for proposal in self.values \
+                result = [proposal for proposal in self.values
                           if proposal.startswith(arg_lead)]
             vim.command('let s:completions = %s' % result)
 
 
 variables = {'ropevim_enable_autoimport': 1,
              'ropevim_autoimport_underlineds': 0,
-             'ropevim_codeassist_maxfixes' : 1,
-             'ropevim_enable_shortcuts' : 1,
-             'ropevim_open_files_in_tabs' : 0,
+             'ropevim_codeassist_maxfixes': 1,
+             'ropevim_enable_shortcuts': 1,
+             'ropevim_open_files_in_tabs': 0,
              'ropevim_autoimport_modules': '[]',
              'ropevim_confirm_saving': 0,
              'ropevim_local_prefix': '"<C-c>r"',
@@ -433,7 +441,7 @@ menu_structure = (
     'find_file',
     'undo',
     'redo',
-    None, # separator
+    None,  # separator
     'rename',
     'extract_variable',
     'extract_method',
@@ -446,7 +454,7 @@ menu_structure = (
     'rename_current_module',
     'move_current_module',
     'module_to_package',
-    None, # separator
+    None,  # separator
     'code_assist',
     'goto_definition',
     'show_doc',
@@ -503,4 +511,4 @@ _interface.init()
 _enable_shortcuts(_env)
 
 _add_menu(_env)
-_add_menu(_env, 'PopUp.&Ropevim') # menu weight can also be added
+_add_menu(_env, 'PopUp.&Ropevim')  # menu weight can also be added
