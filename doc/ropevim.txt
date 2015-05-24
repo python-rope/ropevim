@@ -92,7 +92,7 @@ if this param is required or "= <default value>" if it is not.
 ==============================================================================
 4. Enabling Autoimport ~
                                                         *RopeEnablingAutoimport*
-                                                            *:RopevimAutoImport*
+                                                            *:RopeAutoImport*
                                                   *:RopeGenerateAutoimportCache*
 
 Rope can propose and automatically import global names in other
@@ -110,7 +110,7 @@ Now if you are in a buffer that contains: >
   rmtree
 <
 
-and you execute |:RopevimAutoImport| you'll end up with: >
+and you execute |:RopeAutoImport| you'll end up with: >
 
   from shutil import rmtree
   rmtree
