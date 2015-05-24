@@ -132,7 +132,7 @@ Now if you are in a buffer that contains::
 
   rmtree
 
-and you execute ``RopevimAutoImport`` you'll end up with::
+and you execute ``RopeAutoImport`` you'll end up with::
 
   from shutil import rmtree
   rmtree
