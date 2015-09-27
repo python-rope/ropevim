@@ -73,7 +73,8 @@ class VimUtils(ropemode.environment.Environment):
         echo(message)
 
     def yes_or_no(self, prompt):
-        return self.ask_values(prompt, ['yes', 'no']) == 'yes'
+        return self.ask_values(prompt, ['yes', 'y', 'no', 'n']).lower() \
+            in ['yes', 'y']
 
     def y_or_n(self, prompt):
         return self.yes_or_no(prompt)
