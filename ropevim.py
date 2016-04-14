@@ -12,7 +12,6 @@ import ropemode.interface
 
 import vim
 
-
 if sys.version_info[0] == 3:
     python_cmd = 'python3'
 else:
@@ -207,12 +206,12 @@ class VimUtils(ropemode.environment.Environment):
     def _open_file(self, filename, new=False):
         open_in_tab = vim.eval('g:ropevim_open_files_in_tabs')
         if open_in_tab == '1':
-            vim.command('tab drop %s' % filename)
+            vim.command('tab edit! %s' % filename)
             return
 
         if new in ('new', 'vnew'):
             vim.command(new)
-        vim.command('e %s' % filename)
+        vim.command('edit! %s' % filename)
 
     def find_file(self, filename, readonly=False, other=False, force=False):
         if filename != self.filename() or force:
