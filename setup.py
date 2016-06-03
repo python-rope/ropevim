@@ -13,7 +13,7 @@ classifiers = [
     'Environment :: X11 Applications',
     'Environment :: Win32 (MS Windows)',
     # Have not been tested on MacOS
-    # 'Environment :: MacOS X',
+    'Environment :: MacOS X',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: GNU General Public License (GPL)',
     'Natural Language :: English',
@@ -27,7 +27,7 @@ def get_long_description():
     return '\n' + '\n'.join(lines[:end]) + '\n'
 
 setup(name='ropevim',
-      version='0.6.0',
+      version='0.7.0',
       description='A vim plugin for using rope python refactoring library',
       long_description=get_long_description(),
       py_modules=['ropevim', 'rope_omni'],
