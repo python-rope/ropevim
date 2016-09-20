@@ -260,8 +260,11 @@ restructuring can be: >
                                   horizontally split, 'vnew' --
                                   vertically split
 
-*'g:ropevim_open_files_in_tabs'*    If non-zero, ropevim will open files in tabs.
-                                  This is disabled by default.
+*'ropevim_open_files_in_tabs'*      If non-zero, ropevim will open files in tabs.
+                                  This is disabled by default, and it is now
+                                  *deprecated* in favor of
+                                  'ropevim_goto_def_newwin' set to 'tabnew'.
+
 
 
 ==============================================================================

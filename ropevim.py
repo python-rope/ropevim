@@ -186,6 +186,7 @@ class VimUtils(ropemode.environment.Environment):
             colno = offset
         return lineno, colno
 
+    @property
     def filenames(self):
         result = []
         for buffer in vim.buffers:
@@ -204,20 +205,39 @@ class VimUtils(ropemode.environment.Environment):
             self.find_file(initial)
 
     def _open_file(self, filename, new=False):
-        open_in_tab = vim.eval('g:ropevim_open_files_in_tabs')
-        if open_in_tab == '1':
-            vim.command('tab edit! %s' % filename)
-            return
+        # TODO deprecated ... for now it is just an equivalent to
+        # g:ropevim_goto_def_newwin == 'tabnew'
+        if int(vim.eval('g:ropevim_open_files_in_tabs')):
+            new = 'tabnew'
 
-        if new in ('new', 'vnew'):
+        if new in ('new', 'vnew', 'tabnew'):
             vim.command(new)
         vim.command('edit! %s' % filename)
 
     def find_file(self, filename, readonly=False, other=False, force=False):
-        if filename != self.filename() or force:
+        """
+        Originally coming from Emacs, so the definition is the same as
+        the Emacs Lisp function find-file ... "
+
+        (find-file FILENAME &optional WILDCARDS)
+
+        Edit file FILENAME.
+        Switch to a buffer visiting file FILENAME,
+        creating one if none already exists.
+        """
+        if filename not in self.filenames or force:
             self._open_file(filename, new=other)
-            if readonly:
-                vim.command('set nomodifiable')
+        else:
+            for tab in vim.tabpages:
+                for win in tab.windows:
+                    if os.path.samefile(win.buffer.name, filename):
+                        vim.current.tabpage = tab
+                        vim.current.window = win
+                        vim.current.buffer = win.buffer
+                        break
+
+        if readonly:
+            vim.command('set nomodifiable')
 
     def create_progress(self, name):
         return VimProgress(name)

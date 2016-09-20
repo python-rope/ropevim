@@ -262,7 +262,8 @@ Variables
   in another file. By default the file is open in the same buffer.
 
 * ``g:ropevim_open_files_in_tabs``: If non-zero, ropevim will open files
-  in tabs. This is disabled by default.
+  in tabs. This is disabled by default, and it is now *deprecated* in
+  favor of ``g:ropevim_goto_def_newwin`` set to ``"tabnew"``.
 
 Keybinding
 ==========
