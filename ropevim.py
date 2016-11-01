@@ -186,7 +186,6 @@ class VimUtils(ropemode.environment.Environment):
             colno = offset
         return lineno, colno
 
-    @property
     def filenames(self):
         result = []
         for buffer in vim.buffers:
@@ -225,7 +224,7 @@ class VimUtils(ropemode.environment.Environment):
         Switch to a buffer visiting file FILENAME,
         creating one if none already exists.
         """
-        if filename not in self.filenames or force:
+        if filename not in self.filenames() or force:
             self._open_file(filename, new=other)
         else:
             for tab in vim.tabpages:
