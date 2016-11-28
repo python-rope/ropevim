@@ -394,7 +394,7 @@ class VimProgress(object):
 def echo(message):
     if isinstance(message, unicode):
         message = message.encode(vim.eval('&encoding'))
-    vim.command('echo "{}"'.format(message))
+    vim.command('echo "{0}"'.format(message))
 
 
 def call(command):
