@@ -213,6 +213,20 @@ class VimUtils(ropemode.environment.Environment):
             vim.command(new)
         vim.command('edit! %s' % filename)
 
+    @staticmethod
+    def _samefile(file1, file2):
+        # Breaks under Jython and other platforms, but I guess it should
+        # be enough.
+        if os.name == 'posix':
+            return os.path.samefile(file1, file2)
+        elif os.name == 'nt':
+            # it is a way more complicated, the following does not deal
+            # with hard links on Windows
+            # for better discussion see
+            # http://stackoverflow.com/q/8892831/164233
+            return os.path.normcase(os.path.normpath(file1)) == \
+                os.path.normcase(os.path.normpath(file2))
+
     def find_file(self, filename, readonly=False, other=False, force=False):
         """
         Originally coming from Emacs, so the definition is the same as
@@ -229,7 +243,7 @@ class VimUtils(ropemode.environment.Environment):
         else:
             for tab in vim.tabpages:
                 for win in tab.windows:
-                    if os.path.samefile(win.buffer.name, filename):
+                    if self._samefile(win.buffer.name, filename):
                         vim.current.tabpage = tab
                         vim.current.window = win
                         vim.current.buffer = win.buffer
