@@ -394,7 +394,7 @@ class VimUtils(ropemode.environment.Environment):
         ret = u'{%s}' % \
               u','.join(u'"%s":"%s"' %
                         (key, value.replace('"', '\\"'))
-                        for (key, value) in ci.iteritems())
+                        for (key, value) in ci.items())
         return ret
 
 

@@ -20,7 +20,7 @@ class RopeOmniCompleter(object):
             elif isinstance(obj, dict):
                 return u'{' + u','.join([
                     u"%s:%s" % (conv(key), conv(value))
-                    for key, value in obj.iteritems()]) + u'}'
+                    for key, value in obj.items()]) + u'}'
             else:
                 return u'"%s"' % str(obj).replace(u'"', u'\\"')
         return conv(inp)
