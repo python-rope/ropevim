@@ -1,4 +1,4 @@
-if has("python3") && get(g:, "ropevim_prefer_py3", 0)
+if has("python3") && (get(g:, "ropevim_prefer_py3", 0) || get(b:, "ropevim_prefer_py3", 0))
   " Force the use of python3 also in python2 scripts.
   " This needs to be enabled explicitly: 
   " doing so should help with python3 compatiblity,
