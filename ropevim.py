@@ -107,7 +107,10 @@ class VimUtils(ropemode.environment.Environment):
         return line.encode(self._get_encoding())
 
     def _decode_line(self, line):
-        return line.decode(self._get_encoding())
+        if hasattr(line, 'decode'):
+            return line.decode(self._get_encoding())
+        else:
+            return line
 
     def _position_to_offset(self, lineno, colno):
         result = min(colno, len(self.buffer[lineno - 1]) + 1)
@@ -394,7 +397,7 @@ class VimUtils(ropemode.environment.Environment):
         ret = u'{%s}' % \
               u','.join(u'"%s":"%s"' %
                         (key, value.replace('"', '\\"'))
-                        for (key, value) in ci.iteritems())
+                        for (key, value) in ci.items())
         return ret
 
 
@@ -425,8 +428,6 @@ class VimProgress(object):
 
 
 def echo(message):
-    if isinstance(message, unicode):
-        message = message.encode(vim.eval('&encoding'))
     print(message)
 
 
