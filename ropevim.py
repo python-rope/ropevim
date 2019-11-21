@@ -244,13 +244,17 @@ class VimUtils(ropemode.environment.Environment):
         if filename not in self.filenames() or force:
             self._open_file(filename, new=other)
         else:
+            found = False
             for tab in vim.tabpages:
                 for win in tab.windows:
                     if self._samefile(win.buffer.name, filename):
                         vim.current.tabpage = tab
                         vim.current.window = win
                         vim.current.buffer = win.buffer
+                        found = True
                         break
+            if not found:
+                self._open_file(filename, new=other)
 
         if readonly:
             vim.command('set nomodifiable')
