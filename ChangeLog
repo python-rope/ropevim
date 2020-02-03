@@ -2,9 +2,15 @@
  Done
 ======
 
-> Public Release 0.3 : Febrary 5, 2010
+> Public Release 0.8 : February 3, 2020
 
-* ropemode is not the part of distribution : Febrary 5, 2010
+* too many changes since 0.3 to list
+* for this release it is switch to Python 3 as the only supported Python
+  interpreter (for now). Python 2 is gone.
+
+> Public Release 0.3 : February 5, 2010
+
+* ropemode is not the part of distribution : February 5, 2010
 * implemented `extended complete` feature : January 26, 2010
 * improved support of multibyte sources : June 24, 2009
 
@@ -20,7 +26,7 @@
 
 > Public Release 0.1 : May 22, 2008
 
-* ropvim menu : May 21, 2008
+* ropveim menu : May 21, 2008
 * code-assist in insert mode : May 21, 2008
 * using vim quickfix for showing occurrences : May 20, 2008
 * better dialogs : May 19, 2008

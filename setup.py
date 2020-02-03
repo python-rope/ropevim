@@ -8,7 +8,10 @@ except ImportError:
 
 
 classifiers = [
-    'Development Status :: 4 - Beta',
+    'Development Status :: 6 - Mature',
+    'Programming Language :: Python :: 3.5',
+    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
     'Operating System :: OS Independent',
     'Environment :: X11 Applications',
     'Environment :: Win32 (MS Windows)',
@@ -17,7 +20,6 @@ classifiers = [
     'Intended Audience :: Developers',
     'License :: OSI Approved :: GNU General Public License (GPL)',
     'Natural Language :: English',
-    'Programming Language :: Python',
     'Topic :: Software Development']
 
 
@@ -27,7 +29,7 @@ def get_long_description():
     return '\n' + '\n'.join(lines[:end]) + '\n'
 
 setup(name='ropevim',
-      version='0.7.0',
+      version='0.8.0',
       description='A vim plugin for using rope python refactoring library',
       long_description=get_long_description(),
       py_modules=['ropevim', 'rope_omni'],
