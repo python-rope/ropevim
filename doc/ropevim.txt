@@ -225,13 +225,6 @@ restructuring can be: >
 8. Variables ~
                                                                  *RopeVariables*
 
-*'ropevim_prefer_py3'*            If non-zero, ropevim will run under the
-                                  python3 interpreter, if it is available,
-                                  even for python2 scripts. This should help
-                                  reducing the use of python2-only idioms.
-                                  It can be set local to a buffer or globally.
-                                  The default value is `0`.
-
 *'ropevim_codeassist_maxfixes'*     The maximum number of syntax errors
                                   to fix for code assists.
                                   The default value is `1`.

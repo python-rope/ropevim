@@ -18,6 +18,7 @@ library before using ropevim.
 New Features
 ============
 
+* works only with python3 ATM (python2 is not supported anymore)
 * improved support of multibyte sources
 * implemented `extended complete` feature (disabled by default)
 * ropemode is not the part of distribution now
@@ -27,7 +28,7 @@ Setting Up
 ==========
 
 First add ropevim folder to the ``PYTHONPATH`` (or install it using
-``python setup.py install``).
+``python3 setup.py install``).
 
 Then load ``ropevim.vim`` in vim.  
 

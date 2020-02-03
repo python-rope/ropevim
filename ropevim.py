@@ -12,10 +12,8 @@ import ropemode.interface
 
 import vim
 
-if sys.version_info[0] == 3:
-    python_cmd = 'python3'
-else:
-    python_cmd = 'python'
+# Save the opportunity for some other Python interpreters (pypy?)
+python_cmd = 'python3'
 
 
 class VimUtils(ropemode.environment.Environment):
