@@ -24,16 +24,24 @@ New Features
 * ropemode is not the part of distribution now
 
 
-Setting Up
-==========
+Installation
+============
 
-First add ropevim folder to the ``PYTHONPATH`` (or install it using
-``python3 setup.py install``).
+Basic Installation
+------------------
 
-Then load ``ropevim.vim`` in vim.  
+A simple way to download and install, which does not rely on any vim package managers, is:
 
-If you don't have a preferred installation method, I recommend
-installing pathogen.vim, and then simply copy and paste:
+$ sudo pip3 install rope ropemode ropevim
+$ wget -P ~/.vim/ https://raw.githubusercontent.com/python-rope/ropevim/master/ftplugin/python_ropevim.vim 
+$ echo "source ~/.vim/python_ropevim.vim" >> ~/.vimrc
+
+(rope, ropemode and ropevim are pure python libraries which do not need to talk to vim directly, they are installed by pip into the usual Python path.   Only python_ropevim.vim needs to be seen by vim, and it handles loading the pure python modules.)
+
+Installation with pathogen
+--------------------------
+
+If using pathogen.vim, and then simply copy and paste:
 
 .. code:: bash
 
@@ -45,6 +53,10 @@ you have setup `~/.vim/bundle` in this way and you should)
 
 Once help tags have been generated, you can view the manual with `:help
 fugitive.`
+
+
+Installation of repo version
+----------------------------
 
 For using the repository version of rope, see ``docs/ropevim.rst`` (or
 vim command `:he ropevim`)
