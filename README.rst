@@ -32,13 +32,11 @@ Basic Installation
 
 A simple way to download and install, which does not rely on any vim package managers, is:
 
-```
  $ sudo pip3 install rope ropemode ropevim
  
  $ wget -P ~/.vim/ https://raw.githubusercontent.com/python-rope/ropevim/master/ftplugin/python_ropevim.vim 
  
  $ echo "source ~/.vim/python_ropevim.vim" >> ~/.vimrc
-```
 
 (rope, ropemode and ropevim are pure python libraries which do not need to talk to vim directly, they are installed by pip into the usual Python path.   Only python_ropevim.vim needs to be seen by vim, and it handles loading the pure python modules.)
 
