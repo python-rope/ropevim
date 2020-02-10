@@ -34,7 +34,9 @@ A simple way to download and install, which does not rely on any vim package man
 
 ```
  $ sudo pip3 install rope ropemode ropevim
+ 
  $ wget -P ~/.vim/ https://raw.githubusercontent.com/python-rope/ropevim/master/ftplugin/python_ropevim.vim 
+ 
  $ echo "source ~/.vim/python_ropevim.vim" >> ~/.vimrc
 ```
 
