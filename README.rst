@@ -1,7 +1,8 @@
+**Note:** *Please note that this project has been moved to* 
+`GitHub python-rope / ropevim`_
 
-**Note:** *Please note that this project has been moved to* `GitHub python-rope / ropevim`_
-
-.. _GitHub python-rope / ropevim: https://github.com/python-rope/ropevim
+.. _`GitHub python-rope / ropevim`:
+    https://github.com/python-rope/ropevim
 
 
 ======================
@@ -30,7 +31,8 @@ Installation
 Basic Installation
 ------------------
 
-A simple way to download and install, which does not rely on any vim package managers, is:
+A simple way to download and install, which does not rely on any 
+vim package managers, is:
 
 .. code:: bash
 
@@ -38,7 +40,10 @@ A simple way to download and install, which does not rely on any vim package man
  $ wget -P ~/.vim/ https://raw.githubusercontent.com/python-rope/ropevim/master/ftplugin/python_ropevim.vim 
  $ echo "source ~/.vim/python_ropevim.vim" >> ~/.vimrc
 
-(rope, ropemode and ropevim are pure python libraries which do not need to talk to vim directly, they are installed by pip into the usual Python path.   Only python_ropevim.vim needs to be seen by vim, and it handles loading the pure python modules.)
+(rope, ropemode and ropevim are pure python libraries which do 
+not need to talk to vim directly, they are installed by pip into 
+the usual Python path.   Only python_ropevim.vim needs to be seen 
+by vim, and it handles loading the pure python modules.)
 
 Installation with pathogen
 --------------------------
