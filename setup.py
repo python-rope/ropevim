@@ -25,7 +25,7 @@ classifiers = [
 
 def get_long_description():
     lines = open('README.rst').read().splitlines(False)
-    end = lines.index('Setting Up')
+    end = lines.index('Installation')
     return '\n' + '\n'.join(lines[:end]) + '\n'
 
 setup(name='ropevim',

@@ -9,6 +9,10 @@
  ropevim, rope in vim
 ======================
 
+
+Overview
+========
+
 Ropevim is a vim mode that uses rope_ library to provide features like
 python refactorings and code-assists.  You should install rope_
 library before using ropevim.
