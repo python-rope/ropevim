@@ -59,18 +59,18 @@ If using pathogen.vim, and then simply copy and paste:
     $ cd ~/.vim/bundle
     $ git clone https://github.com/python-rope/ropevim.git
 
-(or even add this repo as a submodule to `~/.vim/bundle` git repo if
-you have setup `~/.vim/bundle` in this way and you should)
+(or even add this repo as a submodule to ``~/.vim/bundle`` git repo if
+you have setup ``~/.vim/bundle`` in this way and you should)
 
-Once help tags have been generated, you can view the manual with `:help
-fugitive.`
+Once help tags have been generated, you can view the manual with ``:help
+ropevim.``
 
 
 Installation of repo version
 ----------------------------
 
 For using the repository version of rope, see ``docs/ropevim.rst`` (or
-vim command `:he ropevim`)
+vim command ``:help ropevim``)
 
 
 Getting Started
