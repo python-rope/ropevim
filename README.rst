@@ -379,7 +379,7 @@ Shortcuts
 Some commands are used very frequently; specially the commands in        
 code-assist group.  You can define your own shortcuts like this::        
                                                                          
-  :map <C-c>g :call RopeGotoDefinition()                                
+  :noremap <C-c>g :call RopeGotoDefinition()                                
                                                                          
 Ropevim itself comes with a few shortcuts.  These shortcuts will be      
 used only when ``ropevim_enable_shortcuts`` is set.                      

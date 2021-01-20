@@ -328,7 +328,7 @@ class VimUtils(ropemode.environment.Environment):
                     (_vim_name(name), _vim_name(name)))
         if key is not None:
             key = prekey + key.replace(' ', '')
-            vim.command('map %s :call %s()<cr>' % (key, _vim_name(name)))
+            vim.command('noremap %s :call %s()<cr>' % (key, _vim_name(name)))
 
     def _add_function(self, name, callback, prefix=False):
         globals()[name] = callback
@@ -520,7 +520,7 @@ def _init_variables():
 def _enable_shortcuts(env):
     if env.get('enable_shortcuts'):
         for command, shortcut in shortcuts.items():
-            vim.command('map %s :call %s()<cr>' %
+            vim.command('noremap %s :call %s()<cr>' %
                         (shortcut, _vim_name(command)))
         for command, shortcut in insert_shortcuts.items():
             command_name = _vim_name(command) + 'InsertMode'
