@@ -29,7 +29,7 @@ def get_long_description():
     return '\n' + '\n'.join(lines[:end]) + '\n'
 
 setup(name='ropevim',
-      version='0.8.0',
+      version='0.8.1',
       description='A vim plugin for using rope python refactoring library',
       long_description=get_long_description(),
       py_modules=['ropevim', 'rope_omni'],

@@ -2,6 +2,12 @@
  Done
 ======
 
+> Public Release 0.8.1 : January 24, 2021
+
+* Mostly cleanups
+* Closes #83. Change :map -> :noremap <Jasha>
+* Remove incorrect reference to fugitive from docs <David D Lowe>
+
 > Public Release 0.8 : February 3, 2020
 
 * too many changes since 0.3 to list
