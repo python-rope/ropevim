@@ -40,7 +40,7 @@ vim package managers, is:
 
 .. code:: bash
 
- $ sudo pip3 install rope ropemode ropevim 
+ $ sudo pip3 install ropevim 
  $ wget -P ~/.vim/ https://raw.githubusercontent.com/python-rope/ropevim/master/ftplugin/python_ropevim.vim 
  $ echo "source ~/.vim/python_ropevim.vim" >> ~/.vimrc
 
