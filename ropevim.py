@@ -125,7 +125,7 @@ class VimUtils(ropemode.environment.Environment):
         end_mark = self.buffer.mark('>')
         if beg_mark and end_mark:
             start = self._position_to_offset(*beg_mark)
-            end = self._position_to_offset(*end_mark)
+            end = self._position_to_offset(*end_mark) + 1
             return start, end
         else:
             return 0, 0
