@@ -1,10 +1,3 @@
-**Note:** *Please note that this project has been moved to* 
-`GitHub python-rope / ropevim`_
-
-.. _`GitHub python-rope / ropevim`:
-    https://github.com/python-rope/ropevim
-
-
 ======================
  ropevim, rope in vim
 ======================
@@ -26,23 +19,51 @@ New Features
 * works only with python3 ATM (python2 is not supported anymore)
 * improved support of multibyte sources
 * implemented `extended complete` feature (disabled by default)
-* ropemode is not the part of distribution now
+* ropemode is not part of the distribution now
 
 
 Installation
 ============
 
+Using Minpac
+------------
+
+.. code:: vim
+
+    call minpac#add('python-rope/ropevim')
+
+Using Vim-Plug
+--------------
+
+.. code:: vim
+
+    Plug 'python-rope/ropevim'
+    
+Using Vundle
+------------
+
+.. code:: vim
+
+    Plugin 'python-rope/ropevim'
+
 Basic Installation
 ------------------
 
 A simple way to download and install, which does not rely on any 
-vim package managers, is:
+vim native package (requires Vim 8), is:
+
+.. code:: bash 
+
+    $ mkdir -p ~/.vim/pack/plugins/start/
+    $ git clone https://github.com/python-rope/ropevim.git ~/.vim/pack/plugins/start/
+
+Or on older Vim:
 
 .. code:: bash
 
- $ sudo pip3 install ropevim 
- $ wget -P ~/.vim/ https://raw.githubusercontent.com/python-rope/ropevim/master/ftplugin/python_ropevim.vim 
- $ echo "source ~/.vim/python_ropevim.vim" >> ~/.vimrc
+    $ sudo pip3 install ropevim 
+    $ wget -P ~/.vim/ https://raw.githubusercontent.com/python-rope/ropevim/master/ftplugin/python_ropevim.vim 
+    $ echo "source ~/.vim/python_ropevim.vim" >> ~/.vimrc
 
 (rope, ropemode and ropevim are pure python libraries which do 
 not need to talk to vim directly, they are installed by pip into 
