@@ -429,10 +429,9 @@ like this in your ``~/.vimrc``::
 Contributing
 ============
 
-Send your bug reports, feature requests and patches to `rope-dev (at)
-googlegroups.com`_.
+Send your bug reports, feature requests and patches to `ropevim Github Issue Tracker`_.
 
-.. _`rope-dev (at) googlegroups.com`: http://groups.google.com/group/rope-dev
+.. _`ropevim Github Issue Tracker`: https://github.com/python-rope/ropevim/issues
 
 
 License
