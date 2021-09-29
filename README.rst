@@ -49,8 +49,8 @@ Using Vundle
 Basic Installation
 ------------------
 
-A simple way to download and install, which does not rely on any 
-vim native package (requires Vim 8), is:
+A simple way to download and install, which does just uses native 
+packaging system (requires Vim 8):
 
 .. code:: bash 
 
