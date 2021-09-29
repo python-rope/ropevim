@@ -429,9 +429,11 @@ like this in your ``~/.vimrc``::
 Contributing
 ============
 
-Send your bug reports, feature requests and patches to `ropevim Github Issue Tracker`_.
+Send your bug reports, feature requests and patches to `ropevim Github
+Issue Tracker`_ or `rope Github Discussions`_.
 
 .. _`ropevim Github Issue Tracker`: https://github.com/python-rope/ropevim/issues
+.. _`rope Github Discussions`: https://github.com/python-rope/rope/discussions
 
 
 License
