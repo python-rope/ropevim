@@ -55,7 +55,7 @@ packaging system (requires Vim 8):
 .. code:: bash 
 
     $ mkdir -p ~/.vim/pack/plugins/start/
-    $ git clone https://github.com/python-rope/ropevim.git ~/.vim/pack/plugins/start/
+    $ git clone https://github.com/python-rope/ropevim.git ~/.vim/pack/plugins/start/ropevim
 
 Or on older Vim:
 
