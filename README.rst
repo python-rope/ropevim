@@ -30,6 +30,7 @@ Using Minpac
 
 .. code:: vim
 
+    filetype plugin on
     call minpac#add('python-rope/ropevim')
 
 Using Vim-Plug
@@ -37,6 +38,7 @@ Using Vim-Plug
 
 .. code:: vim
 
+    filetype plugin on
     Plug 'python-rope/ropevim'
     
 Using Vundle
@@ -44,6 +46,7 @@ Using Vundle
 
 .. code:: vim
 
+    filetype plugin on
     Plugin 'python-rope/ropevim'
 
 Basic Installation
