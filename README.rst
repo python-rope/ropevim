@@ -33,6 +33,10 @@ Using Minpac
     filetype plugin on
     call minpac#add('python-rope/ropevim')
 
+.. code:: bash
+
+    $ pip install ropevim
+
 Using Vim-Plug
 --------------
 
@@ -41,6 +45,10 @@ Using Vim-Plug
     filetype plugin on
     Plug 'python-rope/ropevim'
     
+.. code:: bash
+
+    $ pip install ropevim
+    
 Using Vundle
 ------------
 
@@ -48,6 +56,10 @@ Using Vundle
 
     filetype plugin on
     Plugin 'python-rope/ropevim'
+
+.. code:: bash
+
+    $ pip install ropevim
 
 Basic Installation
 ------------------
@@ -59,6 +71,7 @@ packaging system (requires Vim 8):
 
     $ mkdir -p ~/.vim/pack/plugins/start/
     $ git clone https://github.com/python-rope/ropevim.git ~/.vim/pack/plugins/start/ropevim
+    $ pip install ropevim
 
 Or on older Vim:
 
@@ -67,6 +80,7 @@ Or on older Vim:
     $ sudo pip3 install ropevim 
     $ wget -P ~/.vim/ https://raw.githubusercontent.com/python-rope/ropevim/master/ftplugin/python_ropevim.vim 
     $ echo "source ~/.vim/python_ropevim.vim" >> ~/.vimrc
+    $ pip install ropevim
 
 (rope, ropemode and ropevim are pure python libraries which do 
 not need to talk to vim directly, they are installed by pip into 
@@ -82,6 +96,7 @@ If using pathogen.vim, and then simply copy and paste:
 
     $ cd ~/.vim/bundle
     $ git clone https://github.com/python-rope/ropevim.git
+    $ pip install ropevim
 
 (or even add this repo as a submodule to ``~/.vim/bundle`` git repo if
 you have setup ``~/.vim/bundle`` in this way and you should)
