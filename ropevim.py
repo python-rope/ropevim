@@ -218,9 +218,9 @@ class VimUtils(ropemode.environment.Environment):
     def _samefile(file1, file2):
         # Breaks under Jython and other platforms, but I guess it should
         # be enough.
-        if os.name == 'posix':
+        if os.name == "posix" and os.path.exists(file1) and os.path.exists(file2):
             return os.path.samefile(file1, file2)
-        elif os.name == 'nt':
+        else:
             # it is a way more complicated, the following does not deal
             # with hard links on Windows
             # for better discussion see
