@@ -9,7 +9,14 @@ function! LoadRope()
   PythonCmd << EOF
 import ropevim
 
-ropevim.load_ropevim()
+if not hasattr(ropevim, "__version__") or ropevim.__version__ != "0.9.0":
+    print(
+        "Mismatching version for pip installed ropevim,"
+        " please run 'pip install --upgrade ropevim' and make sure"
+        " the version of the ropevim vim plugin is up to date"
+    )
+else:
+    ropevim.load_ropevim()
 EOF
 endfunction
 

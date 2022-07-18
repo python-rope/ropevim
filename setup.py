@@ -9,7 +9,7 @@ def get_long_description():
 
 setup(
     name="ropevim",
-    version="0.8.1",
+    version="0.9.0",
     description="A vim plugin for using rope python refactoring library",
     long_description=get_long_description(),
     maintainer="Matej Cepl",
