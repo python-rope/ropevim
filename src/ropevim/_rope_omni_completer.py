@@ -12,7 +12,7 @@ def get_omni_completer(code_assist, environment, python_cmd):
             "function! RopeCompleteFunc(findstart, base)\n"
             '    " A completefunc for python code using rope\n'
             "    if (a:findstart)\n"
-            f"        {python_cmd} ropecompleter = ropevim._loader._ropecompleter\n"
+            f"        {python_cmd} ropecompleter = ropevim._rope_omni_completer._ropecompleter\n"
             f'        {python_cmd} vim.command("return %s" % ropecompleter.get_start())\n'
             "    else\n"
             f'        {python_cmd} vim.command("return %s" % ropecompleter.complete())\n'
