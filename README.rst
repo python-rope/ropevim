@@ -37,6 +37,20 @@ Using Minpac
 
     $ pip install ropevim
 
+Using Packer
+--------------
+
+.. code:: lua
+
+    use({
+      'python-rope/ropevim',
+      ft = "python"
+    })
+
+.. code:: bash
+
+    $ pip install ropevim
+
 Using Vim-Plug
 --------------
 
