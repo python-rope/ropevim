@@ -37,6 +37,9 @@ Using Minpac
 
     $ pip install ropevim
 
+If you're using **Neovim**, you will also need to 
+`install neovim python providers`_ using ``pip install pynvim``.
+
 Using Packer
 --------------
 
@@ -51,6 +54,9 @@ Using Packer
 
     $ pip install ropevim
 
+If you're using **Neovim**, you will also need to 
+`install neovim python providers`_ using ``pip install pynvim``.
+
 Using Vim-Plug
 --------------
 
@@ -62,7 +68,10 @@ Using Vim-Plug
 .. code:: bash
 
     $ pip install ropevim
-    
+
+If you're using **Neovim**, you will also need to 
+`install neovim python providers`_ using ``pip install pynvim``.
+
 Using Vundle
 ------------
 
@@ -74,6 +83,9 @@ Using Vundle
 .. code:: bash
 
     $ pip install ropevim
+
+If you're using **Neovim**, you will also need to 
+`install neovim python providers`_ using ``pip install pynvim``.
 
 Basic Installation
 ------------------
@@ -101,6 +113,9 @@ not need to talk to vim directly, they are installed by pip into
 the usual Python path.   Only python_ropevim.vim needs to be seen 
 by vim, and it handles loading the pure python modules.)
 
+If you're using **Neovim**, you will also need to 
+`install neovim python providers`_ using ``pip install pynvim``.
+
 Installation with pathogen
 --------------------------
 
@@ -118,6 +133,8 @@ you have setup ``~/.vim/bundle`` in this way and you should)
 Once help tags have been generated, you can view the manual with ``:help
 ropevim.``
 
+If you're using **Neovim**, you will also need to 
+`install neovim python providers`_ using ``pip install pynvim``.
 
 Installation of repo version
 ----------------------------
@@ -125,6 +142,7 @@ Installation of repo version
 For using the repository version of rope, see ``docs/ropevim.rst`` (or
 vim command ``:help ropevim``)
 
+.. _install neovim python providers: https://neovim.io/doc/user/provider.html
 
 Getting Started
 ===============
