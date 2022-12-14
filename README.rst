@@ -2,6 +2,12 @@
  ropevim, rope in vim
 ======================
 
+.. csv-table::
+
+   "❗If you are using ropevim, consider using `pylsp-rope`_ in Vim. Also see, `Setup guide for pylsp-rope in Vim`_."
+
+.. _pylsp-rope: https://github.com/python-rope/pylsp-rope
+.. _Setup guide for pylsp-rope in Vim: https://github.com/python-rope/rope/wiki/Rope-in-Vim-or-Neovim
 
 Overview
 ========
