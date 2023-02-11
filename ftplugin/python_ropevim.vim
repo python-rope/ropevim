@@ -8,21 +8,16 @@ endif
 function! LoadRope()
   PythonCmd << EOF
 import ropevim
-from rope_omni import RopeOmniCompleter
+
+if not hasattr(ropevim, "__version__") or ropevim.__version__ != "0.9.0":
+    print(
+        "Mismatching version for pip installed ropevim,"
+        " please run 'pip install --upgrade ropevim' and make sure"
+        " the version of the ropevim vim plugin is up to date"
+    )
+else:
+    ropevim.load_ropevim()
 EOF
 endfunction
 
 call LoadRope()
-
-" The code below is an omni-completer for python using rope and ropevim.
-" Created by Ryan Wooden (rygwdn@gmail.com)
-
-function! RopeCompleteFunc(findstart, base)
-    " A completefunc for python code using rope
-    if (a:findstart)
-        PythonCmd ropecompleter = RopeOmniCompleter(vim.eval("a:base"))
-        PythonCmd vim.command("return %s" % ropecompleter.start)
-    else
-        PythonCmd vim.command("return %s" % ropecompleter.complete(vim.eval("a:base")))
-    endif
-endfunction
